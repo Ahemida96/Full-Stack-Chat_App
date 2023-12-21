@@ -3,7 +3,7 @@ import { AuthContext } from '../context/AuthContext'
 import { ChatContext } from '../context/ChatContext';
 
 const Message = ({message}) => {
-  console.log(Date(message.date))
+  // console.log(Date(message.date))
   const {currentUser} = useContext(AuthContext);
   const {data} = useContext(ChatContext)
 
@@ -14,8 +14,8 @@ const Message = ({message}) => {
   return (
     <div ref={ref} className={`message ${message.senderId === currentUser.uid && "owner"}`}>
         <div className="messageInfo">
-            <img src={message.senderId === currentUser.uid? currentUser.photoURL: data.user.PhotoURL} alt="" />
-            <span>{message.date}</span>
+            <img src={message.senderId === currentUser.uid? currentUser.photoURL : data.user.photoURL} alt="" />
+            <span>{(message.date)}</span>
         </div>
         <div className="messageContent">
             <p>{message.text}</p>
