@@ -11,7 +11,7 @@ export const AuthPage = () => {
 
     const SignInWithGoogle = async () => {
         try {
-            const res = await signInWithPopup(auth, provider); // If it doesn't work, try: 'auth.signInWithPopup(provider);'
+            await signInWithPopup(auth, provider); // If it doesn't work, try: 'auth.signInWithPopup(provider);'
             navigate('/');
         } catch (error) {
             console.error(error);
@@ -23,7 +23,7 @@ export const AuthPage = () => {
         e.preventDefault();
         const { email, password } = e.target.elements;
         try {
-            const res = await signInWithEmailAndPassword(auth, email.value, password.value);
+            await signInWithEmailAndPassword(auth, email.value, password.value);
             navigate('/');
         } catch (error) {
             console.error(error);
@@ -35,7 +35,7 @@ export const AuthPage = () => {
         <div className="formContainer">
             <div className="formWrapper">
                 {/* <h1>Sign In</h1> */}
-                <span className="logo">Lama Chat</span>
+                <span className="logo">Progen Chat</span>
                 <span className="title">Login</span>
                 <form onSubmit={SignInWithEmailAndPass} >
                     <label for="email">Email</label>
