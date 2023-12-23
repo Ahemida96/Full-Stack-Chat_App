@@ -8,6 +8,7 @@ const Search = () => {
   const [user, setUser] = useState(null)
   const [username, setUsername] = useState('')
   const [err, setErr] = useState(false)
+  const [errMessage, setErrMessage] = useState('')
   const { currentUser } = useContext(AuthContext);
   const { dispatch } = useContext(ChatContext);
 
@@ -25,6 +26,7 @@ const Search = () => {
 
   }catch(err){
     setErr(true)
+    setErrMessage("User not found")
   }
 };
 
@@ -33,21 +35,37 @@ const Search = () => {
   };
 
   const handleSelect = async () => {
-    console.log("User Clicked")
-    //check whether the group(chats in firestore) exists, if not create
+    //check whether chat in firestore exists, if not create
     const combinedId =
       currentUser.uid > user.uid
         ? currentUser.uid + user.uid
         : user.uid + currentUser.uid;
     try {
       const res = await getDoc(doc(db, "chats", combinedId));
-      console.log(res)
+      console.log("res", res.exists());
 
       if (!res.exists()) {
         //create a chat in chats collection
         await setDoc(doc(db, "chats", combinedId), { messages: [] });
 
-        //create user chats
+        //create user chats ////userChats collection has a document for each user, each document has a field for each chat the user is in (the field name is the chat id) and the value is an object with the other user's info and the last message sent in the chat (the last message is an object with the text and the date) and the date of the last message sent in the chat (this is used to sort the chats by the most recent)
+        // try {
+        //   await setDoc(doc(db, "userChats", currentUser.uid), {
+        //     [combinedId]: {
+        //       userInfo: {
+        //         uid: user.uid,
+        //         displayName: user.displayName,
+        //         photoURL: user.photoURL,
+        //       },
+        //       lastMessage: {
+        //         text: "",
+        //       },
+        //       date: serverTimestamp(),
+        //     },
+        //   });
+        // } catch (err) {
+        //   console.error(err);
+        // }
         await updateDoc(doc(db, "userChats", currentUser.uid), {
           [combinedId + ".userInfo"]: {
             uid: user.uid,
@@ -57,6 +75,24 @@ const Search = () => {
           [combinedId + ".date"]: serverTimestamp(),
         });
 
+        // try {
+        //   await setDoc(doc(db, "userChats", user.uid), {
+        //     [combinedId]: {
+        //       userInfo: {
+        //         uid: currentUser.uid,
+        //         displayName: currentUser.displayName,
+        //         photoURL: currentUser.photoURL,
+        //       },
+        //       lastMessage: {
+        //         text: "",
+        //       },
+        //       date: serverTimestamp(),
+        //     },
+        //   });
+        // } catch (err) {
+        //   console.error(err);
+        // }
+        // do the same for the other user in the chat (the other user is the one selected from the search) 
         await updateDoc(doc(db, "userChats", user.uid), {
           [combinedId + ".userInfo"]: {
             uid: currentUser.uid,
@@ -84,12 +120,14 @@ const Search = () => {
         onKeyDown={handlekey} 
         onChange={(e)=>setUsername(e.target.value)}/>
       </div>
-      {err && <span className='searchError'>User not found</span>}
-      {user && (<div className="userChat" onClick={handleSelect}>
+      {err && <span className='searchError'>{errMessage}</span>}
+      {user && (<div className="userChat">
         <img src={user.photoURL} alt="" />
         <div className="userChatInfo">
           <span>{user.displayName}</span>
         </div>
+        <span className='addFriend' onClick={handleSelect}></span>
+
       </div>)}
     </div>
   );
