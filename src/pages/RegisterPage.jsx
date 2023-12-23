@@ -57,7 +57,6 @@ export const RegisterPage = () => {
       } catch (err) {
       setErr(true);
       console.log(err);
-      console.log("The email address is already in use by another account.");
       setLoading(false);
       }
       };
@@ -77,8 +76,8 @@ export const RegisterPage = () => {
           <span>Add an avatar</span>
         </label>
         <button >Sign up</button>
-        {loading && "Uploading and compressing the image please wait..."}
-        {err && <span>Something went wrong</span>}
+        {loading && <span className='loader'> "Uploading and compressing the image please wait..."</span>}
+        {err && <span style={{color: 'red'}}>Something went wrong</span>}
       </form>
       <p>
         You do have an account? <Link to='/login'>Login</Link>
