@@ -1,10 +1,10 @@
 import './style.scss';
-import React, { useState, useContext } from "react";
+import React, { useContext } from "react";
 import { AuthContext } from "./context/AuthContext";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import { AuthPage } from './pages/AuthPage';
 import { HomePage } from './pages/HomePage';
-import { Register, RegisterPage } from './pages/RegisterPage';
+import { RegisterPage } from './pages/RegisterPage';
 // import { auth } from './firebase-config'; // If it doesn't work, try:'./firebase-config.js';
 // import Cookies from 'universal-cookie';
 // const cookies = new Cookies();
@@ -22,16 +22,11 @@ function App() {
         <Route path="/" element={currentUser ? <HomePage /> : <AuthPage />} />
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/login" element={<AuthPage />} />
+        {/* <Route path="/profile" element={<Profile />} /> */}
+        <Route path="*" element={<h1>Not Found 404</h1>} />
       </Routes>
     </Router>
   );
-
-  // if (!isAuth) {
-  //   return <AuthPage />
-  // } else {
-  //   // <HomePage />
-  //   <p>Home Page</p>
-  // }
 
 }
 
