@@ -1,15 +1,15 @@
 @mixin mobile {
-  @media screen and (max-width: 480px) {
+  @media screen and (max-width : 480px) {
     @content;
   }
 }
 @mixin tablet {
-  @media screen and (max-width: 768px) {
+  @media screen and (max-width : 768px) {
     @content;
   }
 }
 @mixin laptop {
-  @media screen and (max-width: 1200px) {
+  @media screen and (max-width : 1200px) {
     @content;
   }
 }
@@ -17,82 +17,145 @@
 // Use Variable to store colors $colorName: #hexCode
 
 // Login Page & Register Page
-.formContainer {
-  background-color: #a7bcff;
-  height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
 
-  .formWrapper {
-    background-color: white;
-    padding: 20px 60px;
-    border-radius: 10px;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    align-items: center;
 
-    .logo {
-      color: #5d5b8d;
-      font-weight: bold;
-      font-size: 24px;
 
-    }
 
-    .title {
-      color: #5d5b8d;
-      font-size: 12px;
-    }
 
-    form {
-      display: flex;
-      flex-direction: column;
-      gap: 15px;
+.wrapper {
+  width : 420px;
+  background: transparent;
+  color: #fff;
+  border-radius: 10px;
+  padding: 30px 40px;
 
-      input {
-        padding: 15px;
-        border: none;
-        width: 250px;
-        border-bottom: 1px solid #a7bcff;
-        &::placeholder {
-          color: rgb(175, 175, 175);
-        }
-      }
+  h1{
+    font-size: 35px;
+    text-align: center;
+    padding: 10PX 0;
+    color: #be3c3c;
+  }
+  h2{
+    font-size: 25px;
+    text-align: center; 
+  }
 
-      button {
-        background-color: #7b96ec;
-        color: white;
-        padding: 10px;
-        font-weight: bold;
-        border: none;
-        cursor: pointer;
-      }
+  .input-box {
+    width : 100%;
+    height : 50px;
+    margin: 30px 0;
 
-      label {
-        display: flex;
-        align-items: center;
-        gap: 10px;
-        color: #8da4f1;
-        font-size: 12px;
-        cursor: pointer;
+    
 
-        img {
-          width: 32px;
-        }
+  
+    input{
+      width : 100%;
+      height : 100%;
+      background: transparent;
+      border: none;
+      outline: none;
+      border: 2px solid rgba(255,255,255,.2);
+      border-radius: 40px;
+      color: #fff;
+      font-size: medium;
+      padding-left : 15px;
+  
+      &::placeholder{
+        color: #fff;
       }
     }
-    p {
-      color: #5d5b8d;
-      font-size: 12px;
-      margin-top: 10px;
+    
+  
+    #icon{
+      color: white;
+      position: absolute;
+      right : 20px; 
+      margin-right :570px;
+      margin-top : 20px;
+      // transform: translateY(-50%);
+      font-size: small;
+  
     }
   }
+  .remember-forgot{
+    display: flex;
+    justify-content: space-between;
+    font-size: 15px;
+    margin: -15px 0 15px;
+
+    a{
+      color: #fff;
+      text-decoration: none;
+
+      &:hover{
+        text-decoration: underline;
+        font-size: medium;
+      }
+    }
+  }
+
+  .btn{
+    width : 100%;
+    height : 45px;
+    background: #fff;
+    border: none;
+    outline: none;
+    border-radius: 40px;
+    box-shadow: 0 0 10px rgba(0,0,0,.1);
+    cursor: pointer;
+    font-size: 16px;
+    color: #c81010;
+    font-weight: 600;
+    margin: 5px;
+
+    &:hover{
+      text-decoration: underline;
+      font-size: larger;
+      background-color : rgb(33, 5, 78);
+      color: #fff;
+    }
+  }
+
+  .register-link {
+    font-size: 14.5px;
+    text-align: center;
+    margin : 20px 0 15px;
+
+    p a {
+      color: #fff;
+      text-decoration: none;
+      font-weight: 600;
+
+      &:hover {
+        text-decoration: underline;
+        font-size: medium;
+      }      
+    }
+  }
+
+  .separator{
+            font-size: 20px;
+            color: #fff;
+            padding: 7px;
+          }
+
+  label{
+    display: inline-block;
+    font-size: 15px;
+    margin: 10px 0;
+  }
 }
+
+
+
+
+
+
+
 // Home Page
 .home {
   background-color: #f2f3f8;
-  height: 100vh;
+  height : 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -100,12 +163,12 @@
   .container {
     border: 1px solid white;
     border-radius: 10px;
-    width: 75%;
-    height: 90%;
+    width : 75%;
+    height : 90%;
     display: flex;
     overflow: hidden;
     @include tablet {
-     width: 90%;
+    width : 90%;
     }
 
     .sidebar {
@@ -118,7 +181,7 @@
         flex-direction: column;
         align-items: center;
         background-color: #232233;
-        height: 40px;
+        height : 40px;
         padding: 10px;
         justify-content: space-between;
         color: #ddddf7;
@@ -132,33 +195,33 @@
 
           img {
             background-color: #ddddf7;
-            height: 36px;
-            width: 36px;
+            height : 36px;
+            width : 36px;
             border-radius: 50%;
             object-fit: cover;
           }
 
           .AddGroup {
             background: url('./img/addgroup.png');
-            height: 24px;
-            width: 24px;
+            height : 24px;
+            width : 24px;
             display: block;
             cursor: pointer;
           }
   
           .logout {
             background: url('./img/logout.png');
-            height: 24px;
-            width: 24px;
+            height : 24px;
+            width : 24px;
             display: block;
             cursor: pointer;
           }
 
         }
       }
-     
+    
       .search {
-        border-bottom: 1px solid gray;
+        border-bottom : 1px solid gray;
         
 
         .searchForm {
@@ -168,8 +231,8 @@
 
           .searchIcon {
             background: url('./img/search.png');
-            height: 22px;
-            width: 22px;
+            height : 22px;
+            width : 22px;
             display: block;
             cursor: pointer;
           }
@@ -200,8 +263,8 @@
         }
 
         img {
-          width: 50px;
-          height: 50px;
+          width : 50px;
+          height : 50px;
           border-radius: 50%;
           object-fit: cover;
         }
@@ -218,10 +281,10 @@
         }
         .addFriend {
           background: url('./img/icons8-add-25.png');
-          height: 25px;
-          width: 25px;
+          height : 25px;
+          width : 25px;
           display: block;
-          margin-left: auto;
+          margin-left  : auto;
       }
 
       }
@@ -231,7 +294,7 @@
       flex: 2;
 
       .chatInfo {
-        height: 60px;
+        height  : 60px;
         background-color: #3e3e4f;
         font-weight: bold;
         font-size: large;
@@ -247,14 +310,14 @@
         gap: 10px;
 
         img {
-          height: 24px;
+          height : 24px;
           cursor: pointer;
         }
 
         .dropdown {
           background-color:#3e3e4f;
           border: none;
-          height: 24px;
+          height : 24px;
           cursor: pointer;
         }
       }
@@ -262,13 +325,13 @@
       .messages {
         background-color: #aaaab3;
         padding: 10px;
-        height: calc(100% - 140px);
+        height : calc(100% - 140px);
         overflow-y: scroll;
 
         .message {
           display: flex;
           gap: 20px;
-          margin-bottom: 20px;
+          margin-bottom : 20px;
 
           .messageInfo {
             display: flex;
@@ -277,14 +340,14 @@
             font-weight: 300;
 
             img {
-              width: 40px;
-              height: 40px;
+              width : 40px;
+              height : 40px;
               border-radius: 50%;
               object-fit: cover;
             }
           }
           .messageContent {
-            max-width: 80%;
+            max-width : 80%;
             display: flex;
             flex-direction: column;
             gap: 10px;
@@ -293,11 +356,11 @@
               background-color: white;
               padding: 10px 20px;
               border-radius: 0px 10px 10px 10px;
-              max-width: max-content;
+              max-width : max-content;
             }
 
             img {
-              width: 50%;
+              width : 50%;
             }
           }
 
@@ -317,7 +380,7 @@
       }
 
       .input {
-        height: 50px;
+        height : 50px;
         background-color: white;
         padding: 10px;
         display: flex;
@@ -325,7 +388,7 @@
         justify-content: space-between;
 
         input {
-          width: 100%;
+          width : 100%;
           border: none;
           outline: none;
           color: #2f2d52;
@@ -342,7 +405,7 @@
           gap: 10px;
 
           img {
-            height: 24px;
+            height : 24px;
             cursor: pointer;
           }
 
@@ -385,11 +448,11 @@
 }
 
 .loader {
-  width: fit-content;
+  width : fit-content;
   font-weight: bold;
   font-family: sans-serif;
   font-size: 30px;
-  padding-bottom: 8px;
+  padding-bottom : 8px;
   background: linear-gradient(currentColor 0 0) 0 100%/0% 3px no-repeat;
   animation: l2 2s linear infinite;
 }
