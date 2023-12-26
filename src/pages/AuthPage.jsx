@@ -1,12 +1,13 @@
-import { auth, provider } from '../firebase-config'; // If it doesn't work, try:'../firebase-config.js';
+import { auth, provider,db } from '../firebase-config'; // If it doesn't work, try:'../firebase-config.js';
 import {signInWithPopup, signInWithEmailAndPassword} from "firebase/auth";
 import { useNavigate, Link } from 'react-router-dom';
 import { useState } from 'react';
 import React from 'react';
+import { doc, setDoc } from "firebase/firestore";
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser ,faLock} from '@fortawesome/free-solid-svg-icons';
-
+import defultImg from '../img/broken-image.png' 
 
 
 
@@ -16,12 +17,24 @@ export const AuthPage = () => {
 
     const SignInWithGoogle = async () => {
         try {
-            await signInWithPopup(auth, provider); // If it doesn't work, try: 'auth.signInWithPopup(provider);'
-            navigate('/');
-        } catch (error) {
-            console.error(error);
+            const res = await signInWithPopup(auth, provider);
+
+            await setDoc(doc(db, "users", res.user.uid), {
+                uid: res.user.uid,
+                displayName: res.user.displayName,
+                email: res.user.email,
+                photoURL: res.user.photoURL || defultImg,
+            });
+
+              //create empty user chats on firestore
+            await setDoc(doc(db, "userChats", res.user.uid), {});
+            navigate("/");
+            } catch (err) {
+            console.log(err);
             setErr(true);
-        }
+            }
+            navigate('/');
+            
     };
 
     const SignInWithEmailAndPass = async (e) => {
@@ -37,30 +50,6 @@ export const AuthPage = () => {
     };
 
     return (
-        // <div className="formContainer">
-        //     <div className="formWrapper">
-        //         {/* <h1>Sign In</h1> */}
-        //         <span className="logo">Progen Chat</span>
-        //         <span className="title">Login</span>
-        //         {/* <form onSubmit={SignInWithEmailAndPass} >
-        //             <label for="email">Email</label>
-        //             <input type="email" id="email" name="email" placeholder='Name' required />
-        //             <FontAwesomeIcon icon={faUser} color='white' />
-        //             <label for="password">Password</label>
-        //             <input type="password" id="password" name="password" placeholder='password' required />
-        //             <a href="/forgot-password">Forgot password?</a>
-        //             <button type="submit">Sign In</button>
-        //             {err && <span>Something went wrong</span>}
-        //             <div class="separator">
-        //                 <center><span>or</span></center>
-        //             </div>
-        //             <button onClick={SignInWithGoogle}>Sign In with Google</button>
-        //         </form> */}
-                
-        //         <p>Don't have an account? <Link class='btn' to='/register'> Sign Up</Link></p>
-        //     </div>
-        // </div>
-
         <div class="wrapper">
         <form action="" onSubmit={SignInWithEmailAndPass}>
             <h1>Progen Chat</h1>

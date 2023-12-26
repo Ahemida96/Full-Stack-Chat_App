@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useRef, useState } from 'react'
 import {signOut} from 'firebase/auth'
 import {auth} from '../firebase-config'
 import { AuthContext } from '../context/AuthContext'
@@ -7,8 +7,13 @@ import GroupAddIcon from '@mui/icons-material/GroupAdd';
 import LogoutIcon from '@mui/icons-material/Logout';
 import IconButton from '@mui/material/IconButton';
 import Stack from '@mui/material/Stack';
-import Box from '@mui/material/Box';
+// import Box from '@mui/material/Box';
 import Drawer from '@mui/material/Drawer';
+
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faUser ,faPhone,faEnvelope, faCamera,faClose} from '@fortawesome/free-solid-svg-icons';
+import { color } from '@mui/system'
+// import { color } from '@mui/system'
 
 // import setOpen from './Profile'
 
@@ -18,55 +23,104 @@ const Navbar = () => {
   const {currentUser} = useContext(AuthContext)
 
   const [state, setState] = useState({
-    left: false
+    left : false
   });
 
   const toggleDrawer = (open) => (event) => {
     if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
       return;
     }
-    setState({left: open });
+    setState({left : open });
   };
 
-  const list = () => (
 
-    <Box
-      sx={{ width: 250 }}
-      role="presentation"
-      onClick={toggleDrawer(false)}
-      onKeyDown={toggleDrawer(false)}
-    >
-      <h1>Users</h1>
-      <ul>
-        <li>user1</li>
-        <li>user2</li>
-        <li>user3</li>
-        <li>user4</li>
-        <li>user5</li>
-      </ul>
-    </Box>
-    
-  );
+  const profilePicRef = useRef();
+  const inputFileRef = useRef();
+
+  const toggle = () => {
+    // const blur = document.getElementById('blur');
+    // blur.classList.toggle('active');
+    const popup = document.getElementById('popup');
+    popup.classList.toggle('active');
+}
+  const togglegroup = () => {
+    // const blur = document.getElementById('blur');
+    // blur.classList.toggle('active');
+    const popupgroup = document.getElementById('popupgroup');
+    popupgroup.classList.toggle('active');
+}
+
+const updateProfilePic = () => {
+  profilePicRef.current.src = URL.createObjectURL(inputFileRef.current.files[0]);
+}
 
   return (
     <div className='navbar'>
       <div className="user">
         <Avatar
-        alt='Profile Picture'
-        src={currentUser.photoURL}
-        sx={{ width: 56, height: 56 }}
-        />
-        <Stack direction="row" spacing={1}>
-          <IconButton aria-label="AddGroup" onClick={toggleDrawer(true)} >
+          onClick={toggle}
+          alt='Profile Picture'
+          src={currentUser.photoURL}
+          sx={{ width : 56, height : 56 }}
+          style={{border:"none"}}
+          />
+
+        <IconButton aria-label="AddGroup" onClick={togglegroup} style={{color:"white"}} >
             <GroupAddIcon />
           </IconButton>
+      
+        <IconButton  aria-label="logout">
+          <LogoutIcon onClick={()=>signOut(auth)}  style={{color:"white"   }} />
+        </IconButton>
+        </div>
+    <div id="popupgroup">
+        <div class="users ">
+            <FontAwesomeIcon icon={faClose} id='closeicon' onClick={togglegroup}/>
+            <div class="gname">
+                <input type="text" placeholder="Group-Name" required/>
+              </div>
+              <h3>Users</h3>
+            <div class="uname">
+            <input type="text" placeholder="User" required/>
+            </div>
+            <div class="uname">
+                    <input type="text" placeholder="User" required/>
+            </div>
+            <i class='bx bxs-envelope' ></i>
+                <button type="submit" class="btn">Create Group</button>
+            </div>
+            </div>
+
+      <div id="popup">
+        <div className="hero">
+          <div className="card">
+            <img ref={profilePicRef} src={currentUser.photoURL} alt="" id="profile-pic" />
+            <label htmlFor="input-file"><FontAwesomeIcon icon={faCamera} id='icon'/></label>
+            <input type="file" accept="image/jpeg, image/png, image/jpg" id="input-file" className="img" ref={inputFileRef} onChange={updateProfilePic} />
+            <div className="input-box">
+              <input type="text" placeholder="Username"  />
+              <FontAwesomeIcon icon={faUser} id='icon' />
+            </div>
+            <div className="input-box">
+              <input type="email" placeholder="Email"  />
+              <FontAwesomeIcon icon={faEnvelope} id='icon' />
+            </div>
+            <div className="input-box">
+              <input type="number" placeholder="Phone Number"  />
+              <FontAwesomeIcon icon={faPhone} id='icon' />
+            </div>
+            <button type="submit" className="btn" onClick={toggle} >Update</button>
+          </div>
+        </div>
+      </div>
+          
+        <Stack direction="row" spacing={1}>
+          
           <Drawer
             anchor='left'
             open={state.left}
             onClose={toggleDrawer(false)}
-            
           >
-            {list()}
           </Drawer>
 
           <IconButton  aria-label="logout">
@@ -75,7 +129,6 @@ const Navbar = () => {
         </Stack>
         
       </div>
-    </div>
   )
 }
 

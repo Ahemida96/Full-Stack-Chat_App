@@ -150,6 +150,196 @@
 
 
 
+//profile
+
+.card{
+  width : 700px;
+  padding: 10px;
+  border-radius: 20px;
+  text-align: center;
+
+  img{
+    width : 180px;
+    height : 180px;
+    border-radius: 50%;
+    margin-top : 40px;
+    margin-bottom : 30px;
+    margin-right : 180px;
+  }
+}
+
+
+
+label{
+  display: block;
+  align-content: center;
+  width : 50px;
+  color: #000000;
+  margin:auto;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.img{
+  display: none;
+}
+
+#popup .hero .card .input-box {
+  width : 70%;
+  height : 50px;
+  margin: 30px 0;
+}
+
+.input-box input{
+    width : 100%;
+    height : 100%;
+    background: transparent;
+    border: none;
+    outline: none;
+    border: 2px solid rgba(40, 21, 21, 0.7);
+    border-radius: 40px;
+    font-size: medium;
+    padding-left : 15px;
+    color: #100101;
+  }
+  #icon{
+      color: white;
+      position: absolute;
+      right : 25px; 
+      margin-right :120px;
+      // margin-bottom : 50px;
+      transform: translateY(-270%);
+      font-size: medium;
+  } 
+
+
+#popup .hero .btn{
+  width : 50%;
+  height : 45px;
+  background: #fff;
+  border: none;
+  outline: none;
+  border-radius: 40px;
+  box-shadow: 0 0 5px rgba(0,0,0,.1);
+  cursor: pointer;
+  font-size: 16px;
+  color: #000000;
+  font-weight: 400;
+  margin: 0;
+  margin-top : 10PX;
+  margin-right : 200px;
+}
+
+#popup .hero .btn:hover{
+  text-decoration: underline;
+  font-size: larger;
+  background-color : rgb(33, 5, 78);
+  color: #fff;
+}
+
+
+#popup{
+  position: fixed;
+  top : 40%;
+  left : 50%;
+  transform: translate(-50%,-50%);
+  width : 600px;
+  padding: 50px;
+  box-shadow: 0 5px 30px rgba(0, 0, 0, 0.3);
+  background: #9e4949;
+  visibility: hidden;
+  opacity: 0;
+  transition: 0.5s;
+} 
+
+
+#popup.active{
+  top : 50%;
+  visibility: visible;
+  opacity: 1;
+  transform: 0.5;
+} 
+
+
+//create group
+
+.container#blur.active{
+    filter:blur(20px);
+    pointer-events: none;
+    user-select: none;
+}
+
+input{
+    width : 75%;
+    height : 100%;
+    background: transparent;
+    border: none;
+    outline: none;
+    border: 1px solid rgba(40, 21, 21, 0.7);
+    border-radius: 40px;
+    font-size: medium;
+    padding : 5px;
+    margin: 5px;
+    color: #000;
+}
+
+h3{
+    color: rgb(79, 67, 67);
+    font-size: 20px;
+    text-align: center;
+    margin-right : 40px;
+    margin-top : 3pxpx;
+}
+#popupgroup .users .btn{
+    width : 50%;
+    height : 45px;
+    background: #c8c3c3;
+    border: none;
+    outline: none;
+    border-radius: 40px;
+    box-shadow: 0 0 5px rgba(0,0,0,.1);
+    cursor: pointer;
+    font-size: 16px;
+    color: #000000;
+    font-weight: 400;
+    margin: 10px 50px ;
+}
+
+#popupgroup .users .btn:hover{
+    text-decoration: underline;
+    font-size: larger;
+    background-color : rgb(33, 5, 78);
+    color: #fff;
+}
+
+#popupgroup{
+    top : 40%;
+    left : 50%;
+    padding: 5px;
+    margin: 20px;
+    width : 300px;
+    box-shadow: 0 5px 30px rgba(0, 0, 0, 0.3);
+    background: #fff;
+    visibility: hidden;
+    opacity: 0;
+    transition: 0.5s;
+} 
+
+#popupgroup.active{
+    top : 70%;
+    visibility: visible;
+    opacity: 1;
+    transform: 0.5;
+} 
+
+#closeicon{
+  color: #ba0606;
+  // margin: 10px 280px;
+  cursor: pointer;
+  border: 1px solid black;
+}
+
+
 
 
 // Home Page
