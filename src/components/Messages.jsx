@@ -18,7 +18,7 @@ const Messages = () => {
     return ()=> {
       unsub();
     };
-  },[data.chatId]);
+  },[data.chatId, currentUser.uid]);
 
   return (
     <div className='messages'>
