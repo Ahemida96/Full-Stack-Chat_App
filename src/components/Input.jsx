@@ -31,7 +31,14 @@ const Input = () => {
         () => {
           getDownloadURL(uploadTask.snapshot.ref).then(async (downloadURL) => {
             await updateDoc(doc(db, "chats", data.chatId), {
-              messages: arrayUnion({
+              [currentUser.uid + ".messages"]: arrayUnion({
+                id: uuid(),
+                text: textMessage,
+                senderId: currentUser.uid,
+                date: Timestamp.now(),
+                img: downloadURL,
+              }),
+              [data.user.uid + ".messages"]: arrayUnion({
                 id: uuid(),
                 text: textMessage,
                 senderId: currentUser.uid,
@@ -44,12 +51,19 @@ const Input = () => {
       );
     }else if (textMessage){
       await updateDoc(doc(db, "chats", data.chatId),{
-        messages: arrayUnion({
+        [currentUser.uid + ".messages"]: arrayUnion({
           id: uuid(),
           text: textMessage,
           senderId: currentUser.uid,
           data:Timestamp.now(),
         }),
+        [data.user.uid + ".messages"]: arrayUnion({
+          id: uuid(),
+          text: textMessage,
+          senderId: currentUser.uid,
+          data:Timestamp.now(),
+        }),
+
       });
     }
     const combinedId =
