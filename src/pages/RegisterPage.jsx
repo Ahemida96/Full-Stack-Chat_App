@@ -5,6 +5,7 @@ import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { doc, setDoc } from "firebase/firestore";
 import { useNavigate, Link } from 'react-router-dom';
 // import Add from '../img/addAvatar.png'
+import defultImg from '../img/broken-image.png'
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser ,faLock , faPhone ,faEnvelope} from '@fortawesome/free-solid-svg-icons';
@@ -21,7 +22,7 @@ export const RegisterPage = () => {
     const displayName = e.target[0].value;
     const email = e.target[1].value;
     const password = e.target[2].value;
-    const img = e.target[3].files[0];
+    const img = e.target[3].files[0] || defultImg;
     console.log(displayName, email, password, img);
 
     try {
