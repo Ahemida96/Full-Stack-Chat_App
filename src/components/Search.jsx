@@ -46,7 +46,10 @@ const Search = () => {
 
       if (!res.exists()) {
         //create a chat in chats collection
-        await setDoc(doc(db, "chats", combinedId), { messages: [] });
+        await setDoc(doc(db, "chats", combinedId), {
+            [currentUser.uid]: { messages: [] },
+            [user.uid]: { messages: [] },
+          });
 
         //create user chats ////userChats collection has a document for each user, each document has a field for each chat the user is in (the field name is the chat id) and the value is an object with the other user's info and the last message sent in the chat (the last message is an object with the text and the date) and the date of the last message sent in the chat (this is used to sort the chats by the most recent)
         // try {
