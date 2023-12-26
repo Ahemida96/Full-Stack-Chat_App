@@ -6,11 +6,9 @@ import defultImg from '../img/broken-image.png'
 import { useNavigate, Link } from 'react-router-dom';
 import { useState } from 'react';
 import React from 'react';
-import { doc, setDoc } from "firebase/firestore";
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser ,faLock} from '@fortawesome/free-solid-svg-icons';
-import defultImg from '../img/broken-image.png' 
 
 
 
@@ -27,8 +25,8 @@ export const AuthPage = () => {
                 displayName: res.user.displayName,
                 email: res.user.email,
                 photoURL: res.user.photoURL || defultImg,
-              });
-  
+            });
+
               //create empty user chats on firestore
               await setDoc(doc(db, "userChats", res.user.uid), {});
               navigate("/");
