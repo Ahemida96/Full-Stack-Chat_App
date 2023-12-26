@@ -1,6 +1,6 @@
 import { auth, db, provider } from '../firebase-config';
 import {signInWithPopup, signInWithEmailAndPassword} from "firebase/auth";
-import { doc, setDoc } from "firebase/firestore";
+import { doc, setDoc, getDoc } from "firebase/firestore";
 import defultImg from '../img/broken-image.png'
 
 import { useNavigate, Link } from 'react-router-dom';
@@ -15,16 +15,24 @@ export const AuthPage = () => {
     const SignInWithGoogle = async () => {
         try {
             const res = await signInWithPopup(auth, provider);
+            //check whether user exists in firestore, if not create
+            const docRef = doc(db, "users", res.user.uid);
+            const docSnap = await getDoc(docRef);
+            if (!docSnap.exists()) {
+                await setDoc(doc(db, "users", res.user.uid), {
+                    uid: res.user.uid,
+                    displayName: res.user.displayName,
+                    email: res.user.email,
+                    photoURL: res.user.photoURL || defultImg,
+                });
+            }
 
-            await setDoc(doc(db, "users", res.user.uid), {
-                uid: res.user.uid,
-                displayName: res.user.displayName,
-                email: res.user.email,
-                photoURL: res.user.photoURL || defultImg,
-              });
-  
-              //create empty user chats on firestore
-              await setDoc(doc(db, "userChats", res.user.uid), {});
+            //check whether userChats exists in firestore, if not create
+              const result = await getDoc(doc(db, "userChats", res.user.uid));
+              //create empty user chats on firestore if not exists
+                if (!result.exists()){
+                    await setDoc(doc(db, "userChats", res.user.uid), {});
+                }
               navigate("/");
             } catch (err) {
               console.log(err);
