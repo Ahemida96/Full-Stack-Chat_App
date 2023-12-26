@@ -1,5 +1,8 @@
-import { auth, provider } from '../firebase-config'; // If it doesn't work, try:'../firebase-config.js';
+import { auth, db, provider } from '../firebase-config';
 import {signInWithPopup, signInWithEmailAndPassword} from "firebase/auth";
+import { doc, setDoc } from "firebase/firestore";
+import defultImg from '../img/broken-image.png'
+
 import { useNavigate, Link } from 'react-router-dom';
 import { useState } from 'react';
 import React from 'react';
@@ -11,12 +14,24 @@ export const AuthPage = () => {
 
     const SignInWithGoogle = async () => {
         try {
-            await signInWithPopup(auth, provider); // If it doesn't work, try: 'auth.signInWithPopup(provider);'
+            const res = await signInWithPopup(auth, provider);
+
+            await setDoc(doc(db, "users", res.user.uid), {
+                uid: res.user.uid,
+                displayName: res.user.displayName,
+                email: res.user.email,
+                photoURL: res.user.photoURL || defultImg,
+              });
+  
+              //create empty user chats on firestore
+              await setDoc(doc(db, "userChats", res.user.uid), {});
+              navigate("/");
+            } catch (err) {
+              console.log(err);
+              setErr(true);
+            }
             navigate('/');
-        } catch (error) {
-            console.error(error);
-            setErr(true);
-        }
+            
     };
 
     const SignInWithEmailAndPass = async (e) => {
