@@ -18,7 +18,7 @@
 
 // Login Page & Register Page
 
-.authpage {
+.auth-regpage {
   background: transparent;
   color: #1e1717;
   height: 100vh;
@@ -144,11 +144,11 @@
       padding: 7px;
     }
     
-      // label{
-      //   display: inline-block;
-      //   font-size: 15px;
-      //   margin: 10px 0;
-      // }
+      label{
+        display: inline-block;
+        font-size: 15px;
+        margin: 10px 0;
+      }
     } 
   }
 }

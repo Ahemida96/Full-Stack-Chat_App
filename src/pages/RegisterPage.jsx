@@ -67,43 +67,43 @@ export const RegisterPage = () => {
       };
 
   return (
-
-  <div class="wrapper">
+    <div className="auth-regpage">
+      <div class="wrapper">
+        <h1 className="title">Registeration</h1> 
         <form onClick={Register}>
-        <h1>Registeration</h1>
-        <div class="input-box">
-                <input type="text" placeholder="Username" required/>
-                <FontAwesomeIcon icon={faUser} id='icon' />
-        </div>
-        <div class="input-box">
-                <input type="email" placeholder="Email" required/>
-                <FontAwesomeIcon icon={faEnvelope} id='icon' />
-        </div>
-        <div class="input-box">
-                <input type="number" placeholder="Phone Number" required/>
-                <FontAwesomeIcon icon={faPhone} id='icon' />
-        </div>
-        <div class="input-box">
-                <input type="password" placeholder="password" required/>
-                <FontAwesomeIcon icon={faLock}  id='icon' />
+          <div class="input-box">
+                  <input type="text" placeholder="Username" required/>
+                  <FontAwesomeIcon icon={faUser} id='icon' />
+          </div>
+          <div class="input-box">
+                  <input type="email" placeholder="Email" required/>
+                  <FontAwesomeIcon icon={faEnvelope} id='icon' />
+          </div>
+          <div class="input-box">
+                  <input type="number" placeholder="Phone Number" required/>
+                  <FontAwesomeIcon icon={faPhone} id='icon' />
+          </div>
+          <div class="input-box">
+                  <input type="password" placeholder="password" required/>
+                  <FontAwesomeIcon icon={faLock}  id='icon' />
 
-        </div>
-        <div class="input-box">
-                <input type="password" placeholder="Confirm Password" required/>
-                <FontAwesomeIcon icon={faLock} id='icon'/>
-        </div>
+          </div>
+          <div class="input-box">
+                  <input type="password" placeholder="Confirm Password" required/>
+                  <FontAwesomeIcon icon={faLock} id='icon'/>
+          </div>
 
-        <label for=""><input type="checkbox"/> I heraby declare the above information provided is true and correct</label>
-        <button type="submit" class="btn">Sign up</button>
-        {loading && <span className='loader'> "Uploading and compressing the image please wait..."</span>}
-        {err && <span style={{color: 'red'}}>Something went wrong</span>}
-        <div class="register-link">
-          <p>
-            You do have an account? <Link  to='/login'>Login</Link>
-          </p>
-        </div>
-        
-    </form>
+          <label for=""><input type="checkbox"/> I heraby declare the above information provided is true and correct</label>
+          <button type="submit" class="btn">Sign up</button>
+          {loading && <span className='loader'> "Uploading and compressing the image please wait..."</span>}
+          {err && <span style={{color: 'red'}}>Something went wrong</span>}
+          <div class="register-link">
+            <p>
+              You do have an account? <Link  to='/login'>Login</Link>
+            </p>
+          </div>
+        </form>
+      </div>
     </div>
   );
 };

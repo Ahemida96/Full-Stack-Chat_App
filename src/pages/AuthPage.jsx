@@ -61,7 +61,7 @@ export const AuthPage = () => {
     };
 
     return (
-    <div class="authpage">
+    <div class="auth-regpage">
         <div className="wrapper">
             <h1 className="logo">Progen Chat</h1>
             <h2 className="title">login</h2>
