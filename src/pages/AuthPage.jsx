@@ -61,7 +61,7 @@ export const AuthPage = () => {
     };
 
     return (
-        <div class="wrapper">
+    <div class="authpage">
         <form onSubmit={SignInWithEmailAndPass}>
             <h1>Progen Chat</h1>
             <h2>login</h2>
@@ -91,8 +91,6 @@ export const AuthPage = () => {
             <div class="register-link">
                 <p>Don't have an account ? <Link  to='/register'> Sign Up</Link></p>
             </div>
-
-
         </form>
     </div>
 

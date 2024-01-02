@@ -198,13 +198,13 @@ const Chat = () => {
           message="Chat Deleted Successfully"
           action={action}
           />
-        {/* <Messages /> */}
-        <div>
+        <Messages />
+        {/* <div>
         <video ref={currentUserVideoRef} />
         </div>
         <div>
           <video ref={remoteVideoRef} />
-        </div>
+        </div> */}
         <Input />
     </div>
     
