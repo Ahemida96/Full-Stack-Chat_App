@@ -19,132 +19,139 @@
 // Login Page & Register Page
 
 .authpage {
-  width : 420px;
   background: transparent;
-  color: #fff;
-  border-radius: 10px;
-  padding: 30px 40px;
-
-  h1{
-    font-size: 35px;
-    text-align: center;
-    padding: 10PX 0;
-    color: #be3c3c;
-  }
-  h2{
-    font-size: 25px;
-    text-align: center; 
-  }
-
-  .input-box {
-    width : 100%;
-    height : 50px;
-    margin: 30px 0;
-
-    
-
-  
-    input{
-      width : 100%;
-      height : 100%;
-      background: transparent;
-      border: none;
-      outline: none;
-      border: 2px solid rgba(255,255,255,.2);
-      border-radius: 40px;
-      color: #fff;
-      font-size: medium;
-      padding-left : 15px;
-  
-      &::placeholder{
-        color: #fff;
-      }
-    }
-    
-  
-    #icon{
-      color: white;
-      position: absolute;
-      right : 20px; 
-      margin-right :570px;
-      margin-top : 20px;
-      // transform: translateY(-50%);
-      font-size: small;
-  
-    }
-  }
-  .remember-forgot{
+  color: #1e1717;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  .wrapper {
+    background-color: #3e3e4f;
+    padding: 20px 60px;
+    border-radius: 10px;
     display: flex;
-    justify-content: space-between;
-    font-size: 15px;
-    margin: -15px 0 15px;
+    flex-direction: column;
+    gap: 10px;
+    align-items: center;
 
-    a{
-      color: #fff;
-      text-decoration: none;
-
-      &:hover{
-        text-decoration: underline;
-        font-size: medium;
-      }
+    .logo {
+      font-size: 35px;
+      text-align: center;
+      color: #be3c3c;
     }
-  }
-
-  .btn{
-    width : 100%;
-    height : 45px;
-    background: #fff;
-    border: none;
-    outline: none;
-    border-radius: 40px;
-    box-shadow: 0 0 10px rgba(0,0,0,.1);
-    cursor: pointer;
-    font-size: 16px;
-    color: #c81010;
-    font-weight: 600;
-    margin: 5px;
-
-    &:hover{
-      text-decoration: underline;
-      font-size: larger;
-      background-color : rgb(33, 5, 78);
-      color: #fff;
+    .title {
+      font-size: 25px;
     }
-  }
 
-  .register-link {
-    font-size: 14.5px;
-    text-align: center;
-    margin : 20px 0 15px;
+    form {
+      // width : 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      // margin-top: 20px;
 
-    p a {
-      color: #fff;
-      text-decoration: none;
-      font-weight: 600;
-
-      &:hover {
-        text-decoration: underline;
-        font-size: medium;
-      }      
-    }
-  }
-
-  .separator{
-            font-size: 20px;
+      .input-box {
+        width : 100%;
+        height : 50px;
+        margin: 30px 0;
+      
+        input{
+          width : 350px;
+          background: transparent;
+          border: none;
+          outline: none;
+          border: 2px solid rgba(255,255,255,.2);
+          border-radius: 40px;
+          color: #fff;
+          font-size: medium;
+          padding-left : 15px;
+      
+          &::placeholder{
             color: #fff;
-            padding: 7px;
           }
-
-  label{
-    display: inline-block;
-    font-size: 15px;
-    margin: 10px 0;
+        }
+        
+      
+        #icon{
+          color: white;
+          position: absolute;
+          right : 20px; 
+          margin-right :570px;
+          margin-top : 20px;
+          // transform: translateY(-50%);
+          font-size: small;
+      
+        }
+      }
+      .forgot{
+        display: flex;
+        justify-content: space-between;
+        font-size: 15px;
+        margin: -15px 0 15px;
+    
+        a{
+          color: #fff;
+          text-decoration: none;
+    
+          &:hover{
+            font-size: medium;
+          }
+        }
+      }
+    
+      .btn{
+        width : 100%;
+        height : 45px;
+        background: #fff;
+        border: none;
+        outline: none;
+        border-radius: 40px;
+        box-shadow: 0 0 10px rgba(0,0,0,.1);
+        cursor: pointer;
+        font-size: 16px;
+        color: #c81010;
+        font-weight: 600;
+        // margin: 5px;
+    
+        &:hover{
+          text-decoration: underline;
+          font-size: larger;
+          background-color : rgb(33, 5, 78);
+          color: #fff;
+        }
+      }
+    
+      .register-link {
+        font-size: 14.5px;
+        text-align: center;
+        margin : 20px 0 15px;
+    
+        p a {
+          color: #fff;
+          text-decoration: none;
+          font-weight: 600;
+    
+          &:hover {
+            text-decoration: underline;
+            font-size: medium;
+          }      
+        }
+      }
+    
+      .separator{
+      font-size: 20px;
+      color: #fff;
+      padding: 7px;
+    }
+    
+      // label{
+      //   display: inline-block;
+      //   font-size: 15px;
+      //   margin: 10px 0;
+      // }
+    } 
   }
 }
-
-
-
-
 
 //profile
 
