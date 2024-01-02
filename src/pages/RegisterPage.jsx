@@ -69,7 +69,7 @@ export const RegisterPage = () => {
   return (
 
   <div class="wrapper">
-        <form action="">
+        <form onClick={Register}>
         <h1>Registeration</h1>
         <div class="input-box">
                 <input type="text" placeholder="Username" required/>

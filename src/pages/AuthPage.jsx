@@ -48,9 +48,11 @@ export const AuthPage = () => {
 
     const SignInWithEmailAndPass = async (e) => {
         e.preventDefault();
-        const { email, password } = e.target.elements;
+
+        const email = e.target[0].value;
+        const password = e.target[1].value;
         try {
-            await signInWithEmailAndPassword(auth, email.value, password.value);
+            await signInWithEmailAndPassword(auth, email, password);
             navigate('/');
         } catch (error) {
             console.error(error);
@@ -60,7 +62,7 @@ export const AuthPage = () => {
 
     return (
         <div class="wrapper">
-        <form action="" onSubmit={SignInWithEmailAndPass}>
+        <form onSubmit={SignInWithEmailAndPass}>
             <h1>Progen Chat</h1>
             <h2>login</h2>
             <div class="input-box">

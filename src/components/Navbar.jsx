@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useRef } from 'react'
 import { signOut } from 'firebase/auth'
 import { auth } from '../firebase-config'
 import { AuthContext } from '../context/AuthContext'
@@ -6,17 +6,10 @@ import { Avatar } from '@mui/material'
 import GroupAddIcon from '@mui/icons-material/GroupAdd';
 import LogoutIcon from '@mui/icons-material/Logout';
 import IconButton from '@mui/material/IconButton';
-import Button from '@mui/material/Button';
-import Stack from '@mui/material/Stack';
-// import Box from '@mui/material/Box';
-import Drawer from '@mui/material/Drawer';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser ,faPhone,faEnvelope, faCamera,faClose} from '@fortawesome/free-solid-svg-icons';
-import { color } from '@mui/system'
 // import { color } from '@mui/system'
-
-// import setOpen from './Profile'
 
 // I will use list component for showing the users from material ui
 
@@ -102,19 +95,6 @@ const updateProfilePic = () => {
           </div>
         </div>
       </div>
-          
-        <Stack direction="row" spacing={1}>
-          
-          <Drawer
-            anchor='left'
-            open={state.left}
-            onClose={toggleDrawer(false)}
-          >
-          </Drawer>
-          <IconButton aria-label="logout">
-            <LogoutIcon onClick={() => signOut(auth)} />
-          </IconButton>
-        </Stack>
       </div>
   )
 }
