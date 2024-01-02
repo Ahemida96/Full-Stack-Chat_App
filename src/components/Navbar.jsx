@@ -38,8 +38,8 @@ const Navbar = () => {
   const inputFileRef = useRef();
 
   const toggle = () => {
-    // const blur = document.getElementById('blur');
-    // blur.classList.toggle('active');
+    const blur = document.getElementById('blur');
+    blur.classList.toggle('active');
     const popup = document.getElementById('popup');
     popup.classList.toggle('active');
 }
@@ -70,11 +70,11 @@ const updateProfilePic = () => {
           </IconButton>
       
         <IconButton  aria-label="logout">
-          <LogoutIcon onClick={()=>signOut(auth)}  style={{color:"white"   }} />
+          <LogoutIcon onClick={()=>signOut(auth)}  style={{color:"white" }} />
         </IconButton>
         </div>
-    <div id="popupgroup">
-        <div class="users ">
+        <div id="popupgroup" >
+        <div class="users "  id="blur">
             <FontAwesomeIcon icon={faClose} id='closeicon' onClick={togglegroup}/>
             <div class="gname">
                 <input type="text" placeholder="Group-Name" required/>
@@ -92,7 +92,8 @@ const updateProfilePic = () => {
             </div>
 
       <div id="popup">
-        <div className="hero">
+      <FontAwesomeIcon icon={faClose} id='closeicon' onClick={toggle}/>
+        <div className="hero" id='blur'>
           <div className="card">
             <img ref={profilePicRef} src={currentUser.photoURL} alt="" id="profile-pic" />
             <label htmlFor="input-file"><FontAwesomeIcon icon={faCamera} id='icon'/></label>
@@ -113,22 +114,7 @@ const updateProfilePic = () => {
           </div>
         </div>
       </div>
-          
-        <Stack direction="row" spacing={1}>
-          
-          <Drawer
-            anchor='left'
-            open={state.left}
-            onClose={toggleDrawer(false)}
-          >
-          </Drawer>
-
-          <IconButton  aria-label="logout">
-            <LogoutIcon onClick={()=>signOut(auth)} />
-          </IconButton>
-        </Stack>
-        
-      </div>
+        </div>
   )
 }
 

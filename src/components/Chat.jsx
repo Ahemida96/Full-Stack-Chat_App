@@ -17,6 +17,11 @@ import Snackbar from '@mui/material/Snackbar';
 import CloseIcon from '@mui/icons-material/Close';
 import Button from '@mui/material/Button';
 
+import { Peer } from "peerjs";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faShare} from '@fortawesome/free-solid-svg-icons';
+
+
 const ITEM_HEIGHT = 48;
 
 const Chat = () => {
@@ -73,15 +78,76 @@ const Chat = () => {
     </React.Fragment>
   );
 
+
+  var getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
+  var local_stream;
+  // var screenStream;
+  var peer = null;
+  const createRoom = ()=> {
+      console.log("Creating Room")
+      peer = new Peer('id')
+      peer.on('open', (id) => {
+        console.log(id)
+          hideModal()
+          getUserMedia({ video: true, audio: true }, (stream) => {
+              local_stream = stream;
+              setLocalStream(local_stream)
+          }, (err) => {
+              console.log(err)
+          })
+      })
+      peer.on('call', (call) => {
+          call.answer(local_stream);
+          call.on('stream', (stream) => {
+              setRemoteStream(stream)
+          })
+      })
+  }
+  
+  const setLocalStream=(stream)=> {
+  
+      let video = document.getElementById("local-video");
+      video.srcObject = stream;
+      video.muted = true;
+      video.play();
+  }
+  const setRemoteStream=(stream)=> {
+  
+      let video = document.getElementById("remote-video");
+      video.srcObject = stream;
+      video.play();
+  }
+  
+  const hideModal=()=> {
+      document.getElementById("entry-modal").hidden = true
+  }
+
+
+  
+
   return (
     <div className='chat'>
       <div className="chatInfo">
         <span>{data.user.displayName}</span>
         <div className="chatIcons">
           <Stack direction="row" spacing={1}>
-            <IconButton aria-label="video" >
+            <IconButton aria-label="video" onClick={createRoom} >
               <DuoIcon />
             </IconButton>
+
+<div class="entry-modal" id="entry-modal">
+        </div>
+    <div class="meet-area">
+        {/* <!-- Remote Video Element--> */}
+        <video id="remote-video"></video>
+
+        {/* <!-- Local Video Element--> */}
+        <video id="local-video"></video>
+        
+        {/* <!-- <div class="meet-controls-bar"> */}
+            {/* <button onclick="startScreenShare()">Screen Share</button> */}
+        {/* </div> --> */}
+    </div>
 
             <IconButton aria-label="call" >
               <CallIcon />
@@ -107,8 +173,8 @@ const Chat = () => {
               onClose={handleClose}
               PaperProps={{
                 style: {
-                  maxHeight: ITEM_HEIGHT * 4.5,
-                  width: '20ch',
+                  maxHeight : ITEM_HEIGHT * 4.5,
+                  width : '20ch',
                   // color: 'white',
                 },
               }}

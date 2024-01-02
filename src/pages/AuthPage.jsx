@@ -32,15 +32,15 @@ export const AuthPage = () => {
             }
 
             //check whether userChats exists in firestore, if not create
-              const result = await getDoc(doc(db, "userChats", res.user.uid));
+            const result = await getDoc(doc(db, "userChats", res.user.uid));
               //create empty user chats on firestore if not exists
                 if (!result.exists()){
                     await setDoc(doc(db, "userChats", res.user.uid), {});
                 }
-              navigate("/");
+            navigate("/");
             } catch (err) {
-              console.log(err);
-              setErr(true);
+            console.log(err);
+            setErr(true);
             }
             navigate('/');
             
