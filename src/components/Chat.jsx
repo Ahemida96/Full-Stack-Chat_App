@@ -1,9 +1,12 @@
-import React, {useContext, useState} from 'react'
+import React, {useContext, useState, useRef, useEffect} from 'react'
 import Messages from './Messages'
 import Input from './Input'
+import VideoCall from './VideoCall'
+import { Peer } from "peerjs";
+
 import { ChatContext } from '../context/ChatContext'
 import { AuthContext } from '../context/AuthContext'
-import { doc, updateDoc, deleteField } from "firebase/firestore";
+import { doc, updateDoc, deleteField, serverTimestamp } from "firebase/firestore";
 import { db } from '../firebase-config'
 
 import IconButton from '@mui/material/IconButton';
@@ -16,7 +19,8 @@ import Stack from '@mui/material/Stack';
 import Snackbar from '@mui/material/Snackbar';
 import CloseIcon from '@mui/icons-material/Close';
 import Button from '@mui/material/Button';
-
+import StartChatting from './StartChatting'
+import { Alert } from '@mui/material';
 const ITEM_HEIGHT = 48;
 
 const Chat = () => {
@@ -27,21 +31,22 @@ const Chat = () => {
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
 
+  const peerInstance = useRef(null);
+  const remoteVideoRef = useRef(null);
+  const currentUserVideoRef = useRef(null);
+
+  // for menu
   const handleClick = (event) => {
     setAnchorEl(event.currentTarget);
   };
 
+  // for menu
   const handleClose= () => {
     setAnchorEl(null);
   };
 
-  const handleSnackbarClose = (event, reason) => {
-    if (reason === 'clickaway') {
-      return;
-    }
-    setOpenSnackbar(false);
-  };
-
+  
+  // for deleting chat 
   const deleteChat = async() => {
     try{
       const messagesRef = doc(db, 'chats', data.chatId);
@@ -51,12 +56,27 @@ const Chat = () => {
           messages: [],
         }
       });
+      await updateDoc(doc(db, "userChats", currentUser.uid), {
+        [data.chatId + ".lastMessage"]: {
+          text:"",
+        },
+        [data.chatId + ".date"]: serverTimestamp(),
+      });
       setOpenSnackbar(true);
     }catch(err){
       console.log(err);
     }
     setAnchorEl(null);
   }
+
+  // for snackbar 
+  const handleSnackbarClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+    setOpenSnackbar(false);
+  };
+  // for snackbar 
   const action = (
     <React.Fragment>
       <Button color="secondary" size="small" onClick={handleSnackbarClose}>
@@ -73,13 +93,61 @@ const Chat = () => {
     </React.Fragment>
   );
 
+  // for video call
+  const videoCall = () => {
+
+    var getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
+
+    getUserMedia({ video: true, audio: true }, (mediaStream) => {
+
+      currentUserVideoRef.current.srcObject = mediaStream;
+      currentUserVideoRef.current.play();
+
+      const call = peerInstance.current.call(`call${data.user.uid}`, mediaStream)
+
+      call.on('stream', (remoteStream) => {
+        remoteVideoRef.current.srcObject = remoteStream
+        remoteVideoRef.current.play();
+      });
+    });
+  }
+
+  useEffect(() => {
+    const peer = new Peer(`call${currentUser.uid}`);
+
+    peer.on('open', (id) => {
+      console.log('My peer ID is: ' + id);
+    });
+
+    peer.on('call', (call) => {
+      var getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
+      <Alert severity="success">You have a call — check it out!</Alert>
+      getUserMedia({ video: true, audio: true }, (mediaStream) => {
+        currentUserVideoRef.current.srcObject = mediaStream;
+        currentUserVideoRef.current.play();
+        call.answer(mediaStream)
+        call.on('stream', function(remoteStream) {
+          remoteVideoRef.current.srcObject = remoteStream
+          remoteVideoRef.current.play();
+        });
+      });
+    })
+
+    peerInstance.current = peer;
+  }, [ currentUser.uid])
+
+
+  if(!data.user.uid){
+    // console.log("no user selected")
+    return <StartChatting />
+  }
   return (
     <div className='chat'>
       <div className="chatInfo">
         <span>{data.user.displayName}</span>
         <div className="chatIcons">
           <Stack direction="row" spacing={1}>
-            <IconButton aria-label="video" >
+            <IconButton aria-label="video" onClick={videoCall} >
               <DuoIcon />
             </IconButton>
 
@@ -130,9 +198,16 @@ const Chat = () => {
           message="Chat Deleted Successfully"
           action={action}
           />
-        <Messages />
+        {/* <Messages /> */}
+        <div>
+        <video ref={currentUserVideoRef} />
+        </div>
+        <div>
+          <video ref={remoteVideoRef} />
+        </div>
         <Input />
     </div>
+    
   )
 }
 
