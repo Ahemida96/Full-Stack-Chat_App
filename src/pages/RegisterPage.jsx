@@ -4,8 +4,12 @@ import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 import { doc, setDoc } from "firebase/firestore";
 import { useNavigate, Link } from 'react-router-dom';
-import Add from '../img/addAvatar.png'
+// import Add from '../img/addAvatar.png'
 import defultImg from '../img/broken-image.png'
+
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faUser ,faLock , faPhone ,faEnvelope} from '@fortawesome/free-solid-svg-icons';
+
 
 export const RegisterPage = () => {
   const [err, setErr] = useState(false);
@@ -63,28 +67,44 @@ export const RegisterPage = () => {
       };
 
   return (
-    <div className="formContainer">
-    <div className="formWrapper">
-      <span className="logo">Progen Chat</span>
-      <span className="title">Register</span>
-      <form onSubmit={Register} >
-        <input required type="text" placeholder="display name" />
-        <input required type="email" placeholder="email" />
-        <input required type="password" placeholder="password" />
-        <input required style={{ display: "none" }} type="file" id="file" />
-        <label htmlFor="file">
-          <img src={Add} alt="" />
-          <span>Add an avatar</span>
-        </label>
-        <button >Sign up</button>
+
+  <div class="wrapper">
+        <form action="">
+        <h1>Registeration</h1>
+        <div class="input-box">
+                <input type="text" placeholder="Username" required/>
+                <FontAwesomeIcon icon={faUser} id='icon' />
+        </div>
+        <div class="input-box">
+                <input type="email" placeholder="Email" required/>
+                <FontAwesomeIcon icon={faEnvelope} id='icon' />
+        </div>
+        <div class="input-box">
+                <input type="number" placeholder="Phone Number" required/>
+                <FontAwesomeIcon icon={faPhone} id='icon' />
+        </div>
+        <div class="input-box">
+                <input type="password" placeholder="password" required/>
+                <FontAwesomeIcon icon={faLock}  id='icon' />
+
+        </div>
+        <div class="input-box">
+                <input type="password" placeholder="Confirm Password" required/>
+                <FontAwesomeIcon icon={faLock} id='icon'/>
+        </div>
+
+        <label for=""><input type="checkbox"/> I heraby declare the above information provided is true and correct</label>
+        <button type="submit" class="btn">Sign up</button>
         {loading && <span className='loader'> "Uploading and compressing the image please wait..."</span>}
         {err && <span style={{color: 'red'}}>Something went wrong</span>}
-      </form>
-      <p>
-        You do have an account? <Link to='/login'>Login</Link>
-      </p>
+        <div class="register-link">
+          <p>
+            You do have an account? <Link  to='/login'>Login</Link>
+          </p>
+        </div>
+        
+    </form>
     </div>
-  </div>
   );
 };
 export default RegisterPage;
