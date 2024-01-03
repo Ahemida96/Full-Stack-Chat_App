@@ -48,9 +48,11 @@ export const AuthPage = () => {
 
     const SignInWithEmailAndPass = async (e) => {
         e.preventDefault();
-        const { email, password } = e.target.elements;
+
+        const email = e.target[0].value;
+        const password = e.target[1].value;
         try {
-            await signInWithEmailAndPassword(auth, email.value, password.value);
+            await signInWithEmailAndPassword(auth, email, password);
             navigate('/');
         } catch (error) {
             console.error(error);
@@ -59,40 +61,33 @@ export const AuthPage = () => {
     };
 
     return (
-        <div class="wrapper">
-        <form action="" onSubmit={SignInWithEmailAndPass}>
-            <h1>Progen Chat</h1>
-            <h2>login</h2>
-            <div class="input-box">
-                <input type="text" placeholder="Name" required/>
-                <FontAwesomeIcon icon={faUser} id='icon'/>
-                
-            </div>
-            <div class="input-box">
-                <input type="password" placeholder="password" required/>
-                <FontAwesomeIcon icon={faLock} id='icon'/>
-            </div>
-
-            <div class="remember-forgot">
-                {/* <!-- <label for=""><input type="checkbox">remember me</label> --> */}
-                <a href="# ">Forgot Password?</a>
-            </div>
-
-            <button type="submit" class="btn">login</button>
-            {err && <span>Something went wrong</span>}
-
-            <div class="separator">
-                <center><span>or</span></center>
-            </div>
-            
-            <button onClick={SignInWithGoogle} type="submit" class="btn">login With Google</button>
-            <div class="register-link">
-                <p>Don't have an account ? <Link  to='/register'> Sign Up</Link></p>
-            </div>
-
-
-        </form>
+    <div class="auth-regpage">
+        <div className="wrapper">
+            <h1 className="logo">Progen Chat</h1>
+            <h2 className="title">login</h2>
+            <form onSubmit={SignInWithEmailAndPass} >
+                <div class="input-box">
+                    <input type="text" placeholder="Name" required/>
+                    <FontAwesomeIcon icon={faUser} id='icon'/>  
+                </div>
+                <div class="input-box">
+                    <input type="password" placeholder="password" required/>
+                    <FontAwesomeIcon icon={faLock} id='icon'/>
+                </div>
+                <div class="forgot">
+                    <a href="# ">Forgot Password?</a>
+                </div>
+                <button type="submit" class="btn">login</button>
+                {err && <span>Something went wrong</span>}
+                <div class="separator">
+                    <center><span>or</span></center>
+                </div>
+                <button onClick={SignInWithGoogle} type="submit" class="btn">login With Google</button>
+                <div class="register-link">
+                    <p>Don't have an account ? <Link  to='/register'> Sign Up</Link></p>
+                </div>
+            </form>
+        </div>
     </div>
-
     )
 }

@@ -7,11 +7,10 @@ import { HomePage } from './pages/HomePage';
 import { RegisterPage } from './pages/RegisterPage';
 
 
-
-
 function App() {
   const { currentUser } = useContext(AuthContext);
-  console.log(currentUser);
+
+  // console.log(currentUser);
 
   return (
     <Router>

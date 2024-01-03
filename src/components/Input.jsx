@@ -7,6 +7,8 @@ import { Timestamp, arrayUnion, doc, serverTimestamp, setDoc, updateDoc } from '
 import { v4 as uuid } from 'uuid'
 import { db, storage } from '../firebase-config'
 import { getDownloadURL, ref, uploadBytesResumable } from 'firebase/storage'
+import Box from '@mui/material/Box';
+import LinearProgress from '@mui/material/LinearProgress';
 
 const Input = () => {
   const [textMessage, setTextMessage] = useState("")
@@ -24,32 +26,52 @@ const Input = () => {
 
       const uploadTask = uploadBytesResumable(storageRef, imgMessage);
 
-      uploadTask.on(
+      uploadTask.on('state_changed', 
+        (snapshot) => {
+          const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+          console.log('Upload is ' + progress + '% done');
+          switch (snapshot.state) {
+            case 'paused':
+              console.log('Upload is paused');
+              break;
+            case 'running':
+              console.log('Upload is running');
+              break;
+            default:
+              console.log("default")
+          }
+        }, 
         (error) => {
-          console.error(error)
-        },
+          console.log("error in upload image", error);
+        }, 
         () => {
           getDownloadURL(uploadTask.snapshot.ref).then(async (downloadURL) => {
-            await updateDoc(doc(db, "chats", data.chatId), {
-              [currentUser.uid + ".messages"]: arrayUnion({
-                id: uuid(),
-                text: textMessage,
-                senderId: currentUser.uid,
-                date: Timestamp.now(),
-                img: downloadURL,
-              }),
-              [data.user.uid + ".messages"]: arrayUnion({
-                id: uuid(),
-                text: textMessage,
-                senderId: currentUser.uid,
-                date: Timestamp.now(),
-                img: downloadURL,
-              }),
-            });
+            console.log('File available at', downloadURL);
+            // try{
+            //   await updateDoc(doc(db, "chats", data.chatId), {
+            //     [currentUser.uid + ".messages"]: arrayUnion({
+            //       id: uuid(),
+            //       text: textMessage,
+            //       senderId: currentUser.uid,
+            //       date: Timestamp.now(),
+            //       img: downloadURL,
+            //     }),
+            //     [data.user.uid + ".messages"]: arrayUnion({
+            //       id: uuid(),
+            //       text: textMessage,
+            //       senderId: currentUser.uid,
+            //       date: Timestamp.now(),
+            //       img: downloadURL,
+            //     }),
+            //   });
+            // }catch(err){
+            //   console.log("err in updateDoc chats", err);
+            // }
           });
         }
       );
     }else if (textMessage){
+      console.log("in textMessage")
       await updateDoc(doc(db, "chats", data.chatId),{
         [currentUser.uid + ".messages"]: arrayUnion({
           id: uuid(),
@@ -135,13 +157,24 @@ const Input = () => {
     e.code === 'Enter' && handleSend();
   };
 
+  const handleUpload = (e) => {
+    e.code === 'Enter' && handleSend();
+    // disable enter key and send button when uploading image
+    e.stopPropagation();
+    e.preventDefault();
+  };
+
   return (
     <div className='input'>
       <input type="text" placeholder='Type something...' onChange={e=>setTextMessage(e.target.value)} value={textMessage} onKeyUp={handleKey}/>
       <div className="send">
         <img src={attach} alt="" />
-        <input type="file" style={{display: "none"}} id='file' onChange={e=>setImgMessage(e.target.files[0])} onKeyUp={handleKey}/>
-        {loading && (<div class="loader"></div>)}
+        <input type="file" style={{display: "none"}} id='file' onChange={e=>setImgMessage(e.target.files[0])} onKeyUp={handleUpload}/>
+        {loading && (
+        <Box sx={{ width: '100%' }}>
+          <LinearProgress />
+        </Box>
+        )}
         <label htmlFor="file">
           <img src={img} alt="" />
         </label>

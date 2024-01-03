@@ -24,6 +24,7 @@ const Message = ({message}) => {
         <div className="messageContent">
             <p>{message.text}</p>
             {message.img && <img src={message.img} alt="" /> }
+            
         </div>
     </div>
   )
