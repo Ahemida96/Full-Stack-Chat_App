@@ -3,7 +3,7 @@ import attach from '../img/attach.png'
 import img from '../img/img.png'
 import { AuthContext } from '../context/AuthContext'
 import { ChatContext } from '../context/ChatContext'
-import { Timestamp, arrayUnion, doc, serverTimestamp, setDoc, updateDoc } from 'firebase/firestore'
+import { Timestamp, arrayUnion, doc, serverTimestamp, updateDoc } from 'firebase/firestore'
 import { v4 as uuid } from 'uuid'
 import { db, storage } from '../firebase-config'
 import { getDownloadURL, ref, uploadBytesResumable } from 'firebase/storage'
@@ -71,7 +71,7 @@ const Input = () => {
         }
       );
     }else if (textMessage){
-      console.log("in textMessage")
+      if (data.type === "privateChat"){
       await updateDoc(doc(db, "chats", data.chatId),{
         [currentUser.uid + ".messages"]: arrayUnion({
           id: uuid(),
@@ -87,66 +87,57 @@ const Input = () => {
         }),
 
       });
+    }else if (data.type === "groupChat"){
+      data.usersUid.forEach(async (user) => {
+      await updateDoc(doc(db, "chats", data.chatId),{
+        [user + ".messages"]: arrayUnion({
+          id: uuid(),
+          text: textMessage,
+          senderId: currentUser.uid,
+          data:Timestamp.now(),
+        }),
+      });
+    });
     }
-    const combinedId =
-        currentUser.uid > data.user.uid
-          ? currentUser.uid + data.user.uid
-          : data.user.uid + currentUser.uid;
-    if (textMessage){
-      try{
 
-        await updateDoc(doc(db, "userChats", currentUser.uid), {
-          [data.chatId + ".lastMessage"]: {
+    if (data.type === "privateChat"){
+    try{
+        await updateDoc(doc(db, "userChats", currentUser.uid, "privateChats", data.chatId), {
+          lastMessage: {
             text:textMessage,
           },
-          [data.chatId + ".date"]: serverTimestamp(),
+          date: serverTimestamp(),
         });
       }catch(err){
         console.error(err)
         console.log("err in update CurrentUser userChats")
-
-        await setDoc(doc(db, "userChats", currentUser.uid), {
-              [combinedId]: {
-                userInfo: {
-                  uid: data.user.uid,
-                  displayName: data.user.displayName,
-                  photoURL: data.user.photoURL,
-                },
-                lastMessage: {
-                  text: textMessage,
-                },
-                date: serverTimestamp(),
-              },
-            });
       };
-      
+
       try{
-        await updateDoc(doc(db, "userChats", data.user.uid), {
-          [data.chatId + ".lastMessage"]: {
+        await updateDoc(doc(db, "userChats", data.user.uid, "privateChats", data.chatId), {
+          lastMessage: {
             text:textMessage,
           },
-          [data.chatId + ".date"]: serverTimestamp(),
+          date: serverTimestamp(),
         });
       }catch(err){
         console.error(err)
         console.log("err in update otherUser userChats")
-
-        await setDoc(doc(db, "userChats", data.user.uid), {
-          [combinedId]: {
-            userInfo: {
-              uid: currentUser.uid,
-              displayName: currentUser.displayName,
-              photoURL: currentUser.photoURL,
-            },
-            lastMessage: {
-              text: textMessage,
-            },
-            date: serverTimestamp(),
-          },
-        });
+  
       };
-    
+
+    }else if (data.type === "groupChat"){
+      data.usersUid.forEach(async (user) => {
+      await updateDoc(doc(db, "userChats", user, "publicChats", data.chatId), {
+        lastMessage: {
+          text:textMessage,
+        },
+        date: serverTimestamp(),
+      });
+    });
     }
+  
+  }
 
     setTextMessage("");
     setImgMessage(null);

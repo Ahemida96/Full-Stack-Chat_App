@@ -1,8 +1,11 @@
-import React, { useContext, useState } from 'react'
-import { signOut } from 'firebase/auth'
-import { auth } from '../firebase-config'
-import { AuthContext } from '../context/AuthContext'
-import { Avatar } from '@mui/material'
+import React, { useContext, useState } from 'react';
+import { signOut } from 'firebase/auth';
+import { auth } from '../firebase-config';
+import { setDoc, doc, serverTimestamp } from "firebase/firestore";
+import { db } from '../firebase-config';
+import { AuthContext } from '../context/AuthContext';
+import { v4 as uuid } from 'uuid';
+import { Avatar } from '@mui/material';
 import GroupAddIcon from '@mui/icons-material/GroupAdd';
 import LogoutIcon from '@mui/icons-material/Logout';
 import IconButton from '@mui/material/IconButton';
@@ -27,8 +30,40 @@ const Navbar = () => {
     setState({ left: open });
   };
 
-  const createGroup = () => {
+  const createGroup = async () => {
     console.log('new group');
+    let groupName = "Test group 3";
+    let usersArray = ["7lCpJhgttyXaQyYyO7TtbfEij0E3", "sZbK3vujJhUneLOToo0sYG643sx2"]
+    usersArray.push(currentUser.uid);
+    
+    try {
+      let docId = uuid();
+
+      // Create a new document in the 'publicChats' subcollection using the docId for each user in the group
+      usersArray.forEach(async (user) => {
+        console.log(user);
+        await setDoc(doc(db, "chats", docId), {
+          [user]: { messages: [] },
+        });
+
+        await setDoc(doc(db, "userChats", user, "publicChats", docId), {
+          date: serverTimestamp(),
+          "groupInfo": {
+            groupId: docId,
+            displayName: groupName,
+            photoURL: currentUser.photoURL,
+            CreaterUid: currentUser.uid,
+          },
+          users: usersArray,
+          lastMessage: {
+            text: '',
+            createdAt: serverTimestamp(),
+        }
+      });
+    });
+  } catch (err) {
+    console.log(err);
+  }
 
   }
 

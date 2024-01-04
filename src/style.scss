@@ -112,6 +112,8 @@
       flex: 1;
       background-color: #373643;
       position: relative;
+      max-width: 300px;
+      overflow: hidden;
 
       .navbar {
         display: flex;
