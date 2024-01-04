@@ -1,13 +1,13 @@
-import React, {useContext, useState, useRef, useEffect} from 'react'
-import Messages from './Messages'
-import Input from './Input'
-import VideoCall from './VideoCall'
+import React, {useContext, useState, useRef, useEffect} from 'react';
+import Messages from './Messages';
+import Input from './Input';
+// import VideoCall from './VideoCall';
 import { Peer } from "peerjs";
 
-import { ChatContext } from '../context/ChatContext'
-import { AuthContext } from '../context/AuthContext'
+import { ChatContext } from '../context/ChatContext';
+import { AuthContext } from '../context/AuthContext';
 import { doc, updateDoc, deleteField, serverTimestamp } from "firebase/firestore";
-import { db } from '../firebase-config'
+import { db } from '../firebase-config';
 
 import IconButton from '@mui/material/IconButton';
 import Menu from '@mui/material/Menu';
@@ -21,6 +21,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import Button from '@mui/material/Button';
 import StartChatting from './StartChatting'
 import { Alert } from '@mui/material';
+
 const ITEM_HEIGHT = 48;
 
 const Chat = () => {
@@ -34,6 +35,7 @@ const Chat = () => {
   const peerInstance = useRef(null);
   const remoteVideoRef = useRef(null);
   const currentUserVideoRef = useRef(null);
+
 
   // for menu
   const handleClick = (event) => {
@@ -56,12 +58,21 @@ const Chat = () => {
           messages: [],
         }
       });
-      await updateDoc(doc(db, "userChats", currentUser.uid), {
-        [data.chatId + ".lastMessage"]: {
+      if (data.type === "privateChat"){
+      await updateDoc(doc(db, "userChats", currentUser.uid, "privateChats", data.chatId), {
+        lastMessage: {
           text:"",
         },
-        [data.chatId + ".date"]: serverTimestamp(),
+        date: serverTimestamp(),
       });
+    }else if (data.type === "groupChat"){
+      await updateDoc(doc(db, "userChats", currentUser.uid, "publicChats", data.chatId), {
+        lastMessage: {
+          text:"",
+        },
+        date: serverTimestamp(),
+      });
+    }
       setOpenSnackbar(true);
     }catch(err){
       console.log(err);
@@ -136,17 +147,18 @@ const Chat = () => {
     peerInstance.current = peer;
   }, [ currentUser.uid])
 
-
-  if(!data.user.uid){
-    // console.log("no user selected")
+  // if no user or group is selected then show start chatting component
+  if(data.chatId === "null"){
     return <StartChatting />
   }
+  
   return (
     <div className='chat'>
       <div className="chatInfo">
-        <span>{data.user.displayName}</span>
+        <span>{ data.user? data.user.displayName : data.group.displayName }</span>
         <div className="chatIcons">
           <Stack direction="row" spacing={1}>
+
             <IconButton aria-label="video" onClick={videoCall} >
               <DuoIcon />
             </IconButton>
@@ -165,6 +177,7 @@ const Chat = () => {
             >
               <MoreVertIcon />
             </IconButton>
+
             <Menu
               id="long-menu"
               MenuListProps={{
@@ -188,6 +201,7 @@ const Chat = () => {
                 <MenuItem onClick={deleteChat} style={{color: "red"}}>Delete Chat</MenuItem>
 
             </Menu>
+            
           </Stack>
         </div>
       </div>
