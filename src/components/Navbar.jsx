@@ -1,4 +1,4 @@
-import React, { useContext, useRef } from 'react'
+import React, { useContext } from 'react'
 import { signOut } from 'firebase/auth'
 import { auth } from '../firebase-config'
 import { AuthContext } from '../context/AuthContext'
@@ -6,38 +6,56 @@ import { Avatar } from '@mui/material'
 import GroupAddIcon from '@mui/icons-material/GroupAdd';
 import LogoutIcon from '@mui/icons-material/Logout';
 import IconButton from '@mui/material/IconButton';
-
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUser ,faPhone,faEnvelope, faCamera,faClose} from '@fortawesome/free-solid-svg-icons';
-// import { color } from '@mui/system'
-
-// I will use list component for showing the users from material ui
+import Group from './group'
+import Profile from './Profile'
+// import Messages from './Messages'
 
 const Navbar = () => {
   const { currentUser } = useContext(AuthContext)
 
-  const profilePicRef = useRef();
-  const inputFileRef = useRef();
-
+let c_visibility=true;
   const toggle = () => {
-    const blur = document.getElementById('blur');
-    blur.classList.toggle('active');
+    const hchat = document.getElementById('hchat');
+    if(c_visibility)
+    {
+      hchat.style.visibility= 'hidden';
+      c_visibility=false;
+  }
+    else{
+      hchat.style.visibility= 'visible';
+      c_visibility=true;
+    }
     const popup = document.getElementById('popup');
     popup.classList.toggle('active');
 }
+
+let cs_visibility=true;
   const togglegroup = () => {
-    // const blur = document.getElementById('blur');
-    // blur.classList.toggle('active');
+    const hchats = document.getElementById('hchats');
+    const search=document.getElementById('search');
+    if(cs_visibility)
+    {
+      hchats.style.visibility= 'hidden';
+      search.style.visibility= 'hidden';
+      cs_visibility=false;
+  }
+    else{
+      hchats.style.visibility= 'visible';
+      search.style.visibility= 'visible';
+      cs_visibility=true;
+    }
+
     const popupgroup = document.getElementById('popupgroup');
     popupgroup.classList.toggle('active');
 }
 
-const updateProfilePic = () => {
-  profilePicRef.current.src = URL.createObjectURL(inputFileRef.current.files[0]);
-}
+
+
+
 
   return (
-    <div className='navbar'>
+    
+    <div className='navbar' >
       <div className="user">
         <Avatar
           onClick={toggle}
@@ -55,46 +73,13 @@ const updateProfilePic = () => {
           <LogoutIcon onClick={()=>signOut(auth)}  style={{color:"white" }} />
         </IconButton>
         </div>
-        <div id="popupgroup" >
-        <div class="users "  id="blur">
-            <FontAwesomeIcon icon={faClose} id='closeicon' onClick={togglegroup}/>
-            <div class="gname">
-                <input type="text" placeholder="Group-Name" required/>
-              </div>
-              <h3>Users</h3>
-            <div class="uname">
-            <input type="text" placeholder="User" required/>
-            </div>
-            <div class="uname">
-                    <input type="text" placeholder="User" required/>
-            </div>
-            <i class='bx bxs-envelope' ></i>
-                <button type="submit" class="btn">Create Group</button>
-            </div>
-            </div>
+        
+      <div id="popupgroup" class="users " >
+        <Group/>
+      </div>
 
-      <div id="popup">
-      <FontAwesomeIcon icon={faClose} id='closeicon' onClick={toggle}/>
-        <div className="hero" id='blur'>
-          <div className="card">
-            <img ref={profilePicRef} src={currentUser.photoURL} alt="" id="profile-pic" />
-            <label htmlFor="input-file"><FontAwesomeIcon icon={faCamera} id='icon'/></label>
-            <input type="file" accept="image/jpeg, image/png, image/jpg" id="input-file" className="img" ref={inputFileRef} onChange={updateProfilePic} />
-            <div className="input-box">
-              <input type="text" placeholder="Username"  />
-              <FontAwesomeIcon icon={faUser} id='icon' />
-            </div>
-            <div className="input-box">
-              <input type="email" placeholder="Email"  />
-              <FontAwesomeIcon icon={faEnvelope} id='icon' />
-            </div>
-            <div className="input-box">
-              <input type="number" placeholder="Phone Number"  />
-              <FontAwesomeIcon icon={faPhone} id='icon' />
-            </div>
-            <button type="submit" className="btn" onClick={toggle} >Update</button>
-          </div>
-        </div>
+      <div id="popup" >
+        <Profile/>
       </div>
       </div>
   )

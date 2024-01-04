@@ -115,7 +115,7 @@ const Search = () => {
   };
 
   return (
-    <div className='search'>
+    <div className='search' id='search'>
       <div className="searchForm"><span className='searchIcon'></span>
         <input type="text" 
         placeholder='Search or start new chat' 

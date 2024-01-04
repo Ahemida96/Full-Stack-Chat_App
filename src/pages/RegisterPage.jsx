@@ -69,7 +69,7 @@ export const RegisterPage = () => {
   return (
     <div className="auth-regpage">
       <div class="wrapper">
-        <h1 className="title">Registeration</h1> 
+        <h2 className="title">Registeration</h2> 
         <form onClick={Register}>
           <div class="input-box">
                   <input type="text" placeholder="Username" required/>
@@ -93,7 +93,7 @@ export const RegisterPage = () => {
                   <FontAwesomeIcon icon={faLock} id='icon'/>
           </div>
 
-          <label for=""><input type="checkbox"/> I heraby declare the above information provided is true and correct</label>
+          {/* <label for=""><input type="checkbox"/> I heraby declare the above information provided is true and correct</label> */}
           <button type="submit" class="btn">Sign up</button>
           {loading && <span className='loader'> "Uploading and compressing the image please wait..."</span>}
           {err && <span style={{color: 'red'}}>Something went wrong</span>}

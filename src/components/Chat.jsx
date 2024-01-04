@@ -142,7 +142,7 @@ const Chat = () => {
     return <StartChatting />
   }
   return (
-    <div className='chat'>
+    <div className='chat' id='hchat'>
       <div className="chatInfo">
         <span>{data.user.displayName}</span>
         <div className="chatIcons">

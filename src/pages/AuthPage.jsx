@@ -66,7 +66,7 @@ export const AuthPage = () => {
             <h1 className="logo">Progen Chat</h1>
             <h2 className="title">login</h2>
             <form onSubmit={SignInWithEmailAndPass} >
-                <div class="input-box">
+                <div class="input-box"  >
                     <input type="text" placeholder="Name" required/>
                     <FontAwesomeIcon icon={faUser} id='icon'/>  
                 </div>

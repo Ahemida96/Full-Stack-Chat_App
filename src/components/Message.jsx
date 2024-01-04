@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useRef } from 'react'
 import { AuthContext } from '../context/AuthContext'
 import { ChatContext } from '../context/ChatContext';
 import { Avatar } from '@mui/material';
-
+import Navbar from './Navbar'
 const Message = ({message}) => {
   const {currentUser} = useContext(AuthContext);
   const {data} = useContext(ChatContext)
@@ -11,13 +11,16 @@ const Message = ({message}) => {
   useEffect(()=>{
     ref.current?.scrollIntoView({behavior: "smooth"});
   },[message]);
+
+
+
   return (
     <div ref={ref} className={`message ${message.senderId === currentUser.uid && "owner"}`}>
         <div className="messageInfo">
             <Avatar
               alt="Profile Picture"
               src={message.senderId === currentUser.uid? currentUser.photoURL? currentUser.photoURL: "../img/broken-image.png" : data.user.photoURL? data.user.photoURL: "../img/broken-image.png" }
-              sx={{ width: 56, height: 56 }}
+              sx={{ width : 56, height : 56 }}
             />
             <span>{(message.date)}</span>
         </div>
@@ -27,6 +30,7 @@ const Message = ({message}) => {
             
         </div>
     </div>
+    
   )
 }
 
