@@ -110,7 +110,7 @@ const updateProfilePic = () => {
                     <input type="text" placeholder="User" required/>
             </div>
             <i class='bx bxs-envelope' ></i>
-                <button type="submit" class="btn">Create Group</button>
+                <button type="submit" class="btn" onClick={createGroup}>Create Group</button>
             </div>
             </div>
 
