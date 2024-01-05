@@ -1,5 +1,5 @@
 import {React, useState, useContext} from 'react'
-import { collection, query, where, getDocs, setDoc, doc, serverTimestamp, getDoc, updateDoc } from "firebase/firestore";
+import { collection, query, where, getDocs, setDoc, doc, serverTimestamp, getDoc, updateDoc, arrayUnion } from "firebase/firestore";
 import { db } from '../firebase-config';
 import { AuthContext } from "../context/AuthContext";
 import { ChatContext } from '../context/ChatContext';
@@ -10,6 +10,7 @@ const Search = () => {
   const [username, setUsername] = useState('');
   const [err, setErr] = useState(false);
   const [errMessage, setErrMessage] = useState('');
+  
   const { currentUser } = useContext(AuthContext);
   const { dispatch } = useContext(ChatContext);
 
@@ -36,7 +37,40 @@ const Search = () => {
   };
 
   const handleSelect = async () => {
-    //check whether chat in firestore exists, if not create
+
+    // check if the user sending request to himself
+    if (user.uid === currentUser.uid) {
+      setErr(true);
+      setErrMessage("You cannot add yourself");
+      return;
+    }
+
+    // add the user to current user's friends list
+    try{
+      await updateDoc(doc(db, "users", currentUser.uid), {
+        friends: arrayUnion({
+          uid: user.uid,
+          displayName: user.displayName,
+          photoURL: user.photoURL,
+        }),
+      });
+      }catch(err){
+        console.log(err)
+      }   
+
+    // add current user to the user's friends list
+    try{
+      await updateDoc(doc(db, "users", user.uid), {
+        friends: arrayUnion({
+          uid: currentUser.uid,
+          displayName: currentUser.displayName,
+          photoURL: currentUser.photoURL,
+        }),
+      });
+      }catch(err){
+        console.log(err)
+      }
+
     const combinedId =
       currentUser.uid > user.uid
         ? currentUser.uid + user.uid
@@ -52,10 +86,12 @@ const Search = () => {
       
       if (!res.exists() || !currentUserres.exists() || !otherUserres.exists()) {
         //create a chat in chats collection
+        if (!res.exists()){
         await setDoc(doc(db, "chats", combinedId), {
             [currentUser.uid]: { messages: [] },
             [user.uid]: { messages: [] },
           });
+        }
 
         //create a chat in userChats collection for current user
         try{

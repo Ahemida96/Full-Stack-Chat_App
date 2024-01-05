@@ -1,5 +1,13 @@
 import React, { useContext, useRef, useState } from 'react';
 import { AuthContext } from '../context/AuthContext'
+import { setDoc, doc, serverTimestamp, getDocs, query, collection, where } from "firebase/firestore";
+import { db } from '../firebase-config';
+import { v4 as uuid } from 'uuid';
+import { storage } from '../firebase-config';
+import { getDownloadURL, ref, uploadBytesResumable } from 'firebase/storage';
+import { ChatContext } from '../context/ChatContext';
+
+
 import OutlinedInput from '@mui/material/OutlinedInput';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
@@ -22,23 +30,28 @@ const MenuProps = {
         },
     },
     };
-
-const names = [
-    'Oliver Hansen',
-    'Van Henry',
-    'April Tucker',
-    'Ralph Hubbard',
-    'Omar Alexander',
-    'Carlos Abbott',
-    'Miriam Wagner',
-    'Bradley Wilkerson',
-    'Virginia Andrews',
-    'Kelly Snyder',
-    ];
-
-
-    export default function MultipleSelectCheckmarks() {
+    
+const Group = () => {
+    const { currentUser } = useContext(AuthContext)
+    const profilePicRef = useRef();
     const [personName, setPersonName] = useState([]);
+    const [friends, setFriends] = useState([]);
+
+    // const q = query(
+    //     collection(db, "users"),
+    //     where("uid", "==", currentUser.uid)
+    //     );
+    //     const querySnapshot = await getDocs(q);
+    //     querySnapshot.forEach((doc) => {
+    //     setFriends(doc.data().friends);
+    //     });
+
+
+    // const names = friends.map((friend) => friend.displayName);
+    const names = ["A", "B", "C", "D", "E", "F", "G", "H", "I"];
+    console.log(friends);
+    // console.log(names);
+    
 
     const handleChange = (event) => {
         const {
@@ -48,9 +61,45 @@ const names = [
         // On autofill we get a stringified value.
         typeof value === 'string' ? value.split(',') : value,
         );
+        // console.log(personName);
     };
-const { currentUser } = useContext(AuthContext)
-const profilePicRef = useRef();
+
+    const createGroup = async () => {
+        console.log('new group');
+        let groupName = "Test group 3";
+        let usersArray = ["7lCpJhgttyXaQyYyO7TtbfEij0E3", "sZbK3vujJhUneLOToo0sYG643sx2"]
+        usersArray.push(currentUser.uid);
+        
+        try {
+          let docId = uuid();
+    
+          // Create a new document in the 'publicChats' subcollection using the docId for each user in the group
+          usersArray.forEach(async (user) => {
+            console.log(user);
+            await setDoc(doc(db, "chats", docId), {
+              [user]: { messages: [] },
+            });
+    
+            await setDoc(doc(db, "userChats", user, "publicChats", docId), {
+              date: serverTimestamp(),
+              "groupInfo": {
+                groupId: docId,
+                displayName: groupName,
+                photoURL: currentUser.photoURL,
+                CreaterUid: currentUser.uid,
+              },
+              users: usersArray,
+              lastMessage: {
+                text: '',
+                createdAt: serverTimestamp(),
+            }
+          });
+        });
+      } catch (err) {
+        console.log(err);
+      }
+    
+      }
 
     return (    
         <div id='group' className='group'>
@@ -58,7 +107,7 @@ const profilePicRef = useRef();
         <div id='group-pic"' className='group-pic"'>
         <img ref={profilePicRef} src={currentUser.photoURL} alt="" id="group-pic" className='group-pic"'/>
         <label htmlFor="input-file"><FontAwesomeIcon icon={faCamera} id='icon'/></label>
-        </div>.
+        </div>
                     
 
         <div id='gn' className='gn'>
@@ -90,7 +139,7 @@ const profilePicRef = useRef();
         </FormControl>
         </div>
 
-        <Button variant="contained" MultipleSelectCheckmarks className='btn' id='btn'>
+        <Button variant="contained" MultipleSelectCheckmarks className='btn' id='btn' onClick={createGroup}>
         Create
         </Button>
 
@@ -108,3 +157,4 @@ const profilePicRef = useRef();
     );
 }
 
+export default Group;
