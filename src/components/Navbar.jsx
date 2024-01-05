@@ -9,7 +9,7 @@ import { Avatar } from '@mui/material';
 import GroupAddIcon from '@mui/icons-material/GroupAdd';
 import LogoutIcon from '@mui/icons-material/Logout';
 import IconButton from '@mui/material/IconButton';
-import Group from './group'
+import Group from './Group'
 import Profile from './Profile'
 // import Messages from './Messages'
 
