@@ -1,4 +1,4 @@
-import React, { useContext, useRef } from 'react';
+import React, { useContext } from 'react';
 import { signOut } from 'firebase/auth';
 import { auth } from '../firebase-config';
 import { setDoc, doc, serverTimestamp } from "firebase/firestore";
@@ -52,10 +52,6 @@ let cs_visibility=true;
     popupgroup.classList.toggle('active');
 }
 
-
-
-
-
   const createGroup = async () => {
     console.log('new group');
     let groupName = "Test group 3";
@@ -92,7 +88,6 @@ let cs_visibility=true;
   }
 
   }
-
 
   return (
     

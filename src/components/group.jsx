@@ -1,4 +1,4 @@
-import React, { useContext,useRef } from 'react';
+import React, { useContext, useRef, useState } from 'react';
 import { AuthContext } from '../context/AuthContext'
 import OutlinedInput from '@mui/material/OutlinedInput';
 import InputLabel from '@mui/material/InputLabel';
@@ -38,7 +38,7 @@ const names = [
 
 
     export default function MultipleSelectCheckmarks() {
-    const [personName, setPersonName] = React.useState([]);
+    const [personName, setPersonName] = useState([]);
 
     const handleChange = (event) => {
         const {
