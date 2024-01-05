@@ -153,7 +153,7 @@ const Chat = () => {
   }
   
   return (
-    <div className='chat'>
+    <div className='chat' id='hchat'>
       <div className="chatInfo">
         <span>{ data.user? data.user.displayName : data.group.displayName }</span>
         <div className="chatIcons">
@@ -162,6 +162,20 @@ const Chat = () => {
             <IconButton aria-label="video" onClick={videoCall} >
               <DuoIcon />
             </IconButton>
+
+<div class="entry-modal" id="entry-modal">
+        </div>
+    <div class="meet-area">
+        {/* <!-- Remote Video Element--> */}
+        <video id="remote-video"></video>
+
+        {/* <!-- Local Video Element--> */}
+        <video id="local-video"></video>
+        
+        {/* <!-- <div class="meet-controls-bar"> */}
+            {/* <button onclick="startScreenShare()">Screen Share</button> */}
+        {/* </div> --> */}
+    </div>
 
             <IconButton aria-label="call" >
               <CallIcon />
@@ -188,8 +202,8 @@ const Chat = () => {
               onClose={handleClose}
               PaperProps={{
                 style: {
-                  maxHeight: ITEM_HEIGHT * 4.5,
-                  width: '20ch',
+                  maxHeight : ITEM_HEIGHT * 4.5,
+                  width : '20ch',
                   // color: 'white',
                 },
               }}

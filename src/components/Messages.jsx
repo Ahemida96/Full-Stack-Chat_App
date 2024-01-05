@@ -22,7 +22,7 @@ const Messages = () => {
   },[data.chatId, currentUser.uid]);
 
   return (
-    <div className='messages'>
+    <div className='messages' >
       {messages.map((messag) => (
         <Message message={messag} key={messag.id}/>
 

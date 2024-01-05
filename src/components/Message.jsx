@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useRef, useState } from 'react'
 import { AuthContext } from '../context/AuthContext'
 import { ChatContext } from '../context/ChatContext';
 import { Avatar } from '@mui/material';
-
+import Navbar from './Navbar'
 const Message = ({message}) => {
   const {currentUser} = useContext(AuthContext);
   const {data} = useContext(ChatContext)
@@ -44,6 +44,7 @@ const Message = ({message}) => {
             
         </div>
     </div>
+    
   )
 }
 

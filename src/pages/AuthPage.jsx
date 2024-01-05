@@ -32,15 +32,15 @@ export const AuthPage = () => {
             }
 
             //check whether userChats exists in firestore, if not create
-              const result = await getDoc(doc(db, "userChats", res.user.uid));
+            const result = await getDoc(doc(db, "userChats", res.user.uid));
               //create empty user chats on firestore if not exists
                 if (!result.exists()){
                     await setDoc(doc(db, "userChats", res.user.uid), {});
                 }
-              navigate("/");
+            navigate("/");
             } catch (err) {
-              console.log(err);
-              setErr(true);
+            console.log(err);
+            setErr(true);
             }
             navigate('/');
             
@@ -66,7 +66,7 @@ export const AuthPage = () => {
             <h1 className="logo">Progen Chat</h1>
             <h2 className="title">login</h2>
             <form onSubmit={SignInWithEmailAndPass} >
-                <div class="input-box">
+                <div class="input-box"  >
                     <input type="text" placeholder="Name" required/>
                     <FontAwesomeIcon icon={faUser} id='icon'/>  
                 </div>

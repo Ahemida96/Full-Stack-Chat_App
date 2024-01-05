@@ -5,7 +5,7 @@ import Chats from './Chats'
 
 function Sidebar() {
   return (
-    <div className='sidebar'>
+    <div className='sidebar' >
         <Navbar />
         <Search />
         <Chats />
