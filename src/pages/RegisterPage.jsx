@@ -67,31 +67,24 @@ export const RegisterPage = () => {
       };
 
   return (
-    <div className="auth-regpage">
-      <div class="wrapper">
-        <h2 className="title">Registeration</h2> 
-        <form onClick={Register}>
-          <div class="input-box">
-                  <input type="text" placeholder="Username" required/>
-                  <FontAwesomeIcon icon={faUser} id='icon' />
-          </div>
-          <div class="input-box">
-                  <input type="email" placeholder="Email" required/>
-                  <FontAwesomeIcon icon={faEnvelope} id='icon' />
-          </div>
-          <div class="input-box">
-                  <input type="number" placeholder="Phone Number" required/>
-                  <FontAwesomeIcon icon={faPhone} id='icon' />
-          </div>
-          <div class="input-box">
-                  <input type="password" placeholder="password" required/>
-                  <FontAwesomeIcon icon={faLock}  id='icon' />
-
-          </div>
-          <div class="input-box">
-                  <input type="password" placeholder="Confirm Password" required/>
-                  <FontAwesomeIcon icon={faLock} id='icon'/>
-          </div>
+  <div class="wrapper">
+        <form onSubmit={Register}>
+        <h1>Registeration</h1>
+        <div class="input-box">
+                <input type="text" placeholder="Username" required/>
+                <FontAwesomeIcon icon={faUser} id='icon' />
+        </div>
+        <div class="input-box">
+                <input type="email" placeholder="Email" required/>
+                <FontAwesomeIcon icon={faEnvelope} id='icon' />
+        </div>
+        <div class="input-box">
+                <input type="number" placeholder="Phone Number" required/>
+                <FontAwesomeIcon icon={faPhone} id='icon' />
+        </div>
+        <div class="input-box">
+                <input type="password" placeholder="password" required/>
+                <FontAwesomeIcon icon={faLock}  id='icon' />
 
           {/* <label for=""><input type="checkbox"/> I heraby declare the above information provided is true and correct</label> */}
           <button type="submit" class="btn">Sign up</button>
@@ -102,9 +95,9 @@ export const RegisterPage = () => {
               You do have an account? <Link  to='/login'>Login</Link>
             </p>
           </div>
+          </div>
         </form>
       </div>
-    </div>
   );
 };
 export default RegisterPage;
