@@ -5,10 +5,11 @@ import { AuthContext } from "../context/AuthContext";
 import { ChatContext } from '../context/ChatContext';
 
 const Search = () => {
-  const [user, setUser] = useState(null)
-  const [username, setUsername] = useState('')
-  const [err, setErr] = useState(false)
-  const [errMessage, setErrMessage] = useState('')
+
+  const [user, setUser] = useState(null);
+  const [username, setUsername] = useState('');
+  const [err, setErr] = useState(false);
+  const [errMessage, setErrMessage] = useState('');
   const { currentUser } = useContext(AuthContext);
   const { dispatch } = useContext(ChatContext);
 
@@ -42,76 +43,70 @@ const Search = () => {
         : user.uid + currentUser.uid;
     try {
       const res = await getDoc(doc(db, "chats", combinedId));
+      const currentUserres = await getDoc(doc(db, "userChats", currentUser.uid, "privateChat", combinedId));
+      const otherUserres = await getDoc(doc(db, "userChats", user.uid,"privateChat", combinedId));
+      
       console.log("res", res.exists());
-
-      if (!res.exists()) {
+      console.log("currentUserres", currentUserres.exists());
+      console.log("otherUserres", otherUserres.exists());
+      
+      if (!res.exists() || !currentUserres.exists() || !otherUserres.exists()) {
         //create a chat in chats collection
         await setDoc(doc(db, "chats", combinedId), {
             [currentUser.uid]: { messages: [] },
             [user.uid]: { messages: [] },
           });
 
-        //create user chats ////userChats collection has a document for each user, each document has a field for each chat the user is in (the field name is the chat id) and the value is an object with the other user's info and the last message sent in the chat (the last message is an object with the text and the date) and the date of the last message sent in the chat (this is used to sort the chats by the most recent)
-        // try {
-        //   await setDoc(doc(db, "userChats", currentUser.uid), {
-        //     [combinedId]: {
-        //       userInfo: {
-        //         uid: user.uid,
-        //         displayName: user.displayName,
-        //         photoURL: user.photoURL,
-        //       },
-        //       lastMessage: {
-        //         text: "",
-        //       },
-        //       date: serverTimestamp(),
-        //     },
-        //   });
-        // } catch (err) {
-        //   console.error(err);
-        // }
-        await updateDoc(doc(db, "userChats", currentUser.uid), {
-          [combinedId + ".userInfo"]: {
+        //create a chat in userChats collection for current user
+        try{
+        await updateDoc(doc(db, "userChats", currentUser.uid, "privateChats", combinedId), {
+          userInfo: {
             uid: user.uid,
             displayName: user.displayName,
             photoURL: user.photoURL,
           },
-          [combinedId + ".date"]: serverTimestamp(),
+          date: serverTimestamp(),
         });
-
-        // try {
-        //   await setDoc(doc(db, "userChats", user.uid), {
-        //     [combinedId]: {
-        //       userInfo: {
-        //         uid: currentUser.uid,
-        //         displayName: currentUser.displayName,
-        //         photoURL: currentUser.photoURL,
-        //       },
-        //       lastMessage: {
-        //         text: "",
-        //       },
-        //       date: serverTimestamp(),
-        //     },
-        //   });
-        // } catch (err) {
-        //   console.error(err);
-        // }
-        // do the same for the other user in the chat (the other user is the one selected from the search) 
-        await updateDoc(doc(db, "userChats", user.uid), {
-          [combinedId + ".userInfo"]: {
+        }catch(err){
+            await setDoc(doc(db, "userChats", currentUser.uid, "privateChats", combinedId), {
+              userInfo: {
+                uid: user.uid,
+                displayName: user.displayName,
+                photoURL: user.photoURL,
+              },
+              date: serverTimestamp(),
+          });
+          console.log("Created new chat for current user")
+        }
+        //create a chat in userChats collection for other user
+        try{
+        await updateDoc(doc(db, "userChats", user.uid, "privateChats", combinedId), {
+          userInfo: {
             uid: currentUser.uid,
             displayName: currentUser.displayName,
             photoURL: currentUser.photoURL,
           },
-          [combinedId + ".date"]: serverTimestamp(),
+          date: serverTimestamp(),
         });
+      }catch(err){
+          await setDoc(doc(db, "userChats", user.uid, "privateChats", combinedId), {
+            userInfo: {
+              uid: currentUser.uid,
+              displayName: currentUser.displayName,
+              photoURL: currentUser.photoURL,
+            },
+            date: serverTimestamp(),
+        });
+        console.log("Created new chat for other user");
+      }
       }
     } catch (err) {
-      console.error(err)
+      console.error(err);
     }
     dispatch({ type: "CHANGE_USER", payload: user });
 
     setUser(null);
-    setUsername("")
+    setUsername("");
   };
 
   return (
