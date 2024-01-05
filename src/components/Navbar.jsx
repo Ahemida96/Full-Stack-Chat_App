@@ -15,16 +15,20 @@ const Navbar = () => {
 
 let c_visibility=true;
   const toggle = () => {
-    const hchat = document.getElementById('hchat');
+    const hchats = document.getElementById('hchats');
+    const search=document.getElementById('search');
     if(c_visibility)
     {
-      hchat.style.visibility= 'hidden';
+      hchats.style.visibility= 'hidden';
+      search.style.visibility= 'hidden';
       c_visibility=false;
   }
     else{
-      hchat.style.visibility= 'visible';
+      hchats.style.visibility= 'visible';
+      search.style.visibility= 'visible';
       c_visibility=true;
     }
+    
     const popup = document.getElementById('popup');
     popup.classList.toggle('active');
 }
