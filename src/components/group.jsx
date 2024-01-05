@@ -8,7 +8,7 @@ import ListItemText from '@mui/material/ListItemText';
 import Select from '@mui/material/Select';
 import Checkbox from '@mui/material/Checkbox';
 import Button from '@mui/material/Button';
-
+import Navbar from './Navbar'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCamera,faClose} from '@fortawesome/free-solid-svg-icons';
 
@@ -54,7 +54,7 @@ const profilePicRef = useRef();
 
     return (    
         <div id='group' className='group'>
-        <FontAwesomeIcon icon={faClose} id='closeicon'/>
+        <FontAwesomeIcon icon={faClose} id='closeicon' onClick={<Navbar/>} />
         <div id='group-pic"' className='group-pic"'>
         <img ref={profilePicRef} src={currentUser.photoURL} alt="" id="group-pic" className='group-pic"'/>
         <label htmlFor="input-file"><FontAwesomeIcon icon={faCamera} id='icon'/></label>

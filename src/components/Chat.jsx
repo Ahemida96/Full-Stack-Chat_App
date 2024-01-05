@@ -163,19 +163,19 @@ const Chat = () => {
               <DuoIcon />
             </IconButton>
 
-<div class="entry-modal" id="entry-modal">
+{/* <div class="entry-modal" id="entry-modal">
         </div>
     <div class="meet-area">
         {/* <!-- Remote Video Element--> */}
-        <video id="remote-video"></video>
+        {/* <video id="remote-video"></video> */}
 
         {/* <!-- Local Video Element--> */}
-        <video id="local-video"></video>
+        {/* <video id="local-video"></video> */}
         
         {/* <!-- <div class="meet-controls-bar"> */}
             {/* <button onclick="startScreenShare()">Screen Share</button> */}
         {/* </div> --> */}
-    </div>
+    {/* </div> */} 
 
             <IconButton aria-label="call" >
               <CallIcon />
@@ -191,8 +191,7 @@ const Chat = () => {
             >
               <MoreVertIcon />
             </IconButton>
-
-            <Menu
+            <Menu 
               id="long-menu"
               MenuListProps={{
                 'aria-labelledby': 'long-button',

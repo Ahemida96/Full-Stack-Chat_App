@@ -14,7 +14,7 @@ export default function MultipleSelectCheckmarks() {
         profilePicRef.current.src = URL.createObjectURL(inputFileRef.current.files[0]);
     }
     return(
-        <div>
+        <div className='profile'>
 
         <FontAwesomeIcon icon={faClose} id='closeicon' />
                 <div className="hero" >
