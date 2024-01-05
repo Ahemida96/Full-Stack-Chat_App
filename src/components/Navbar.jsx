@@ -1,10 +1,7 @@
 import React, { useContext } from 'react';
 import { signOut } from 'firebase/auth';
 import { auth } from '../firebase-config';
-import { setDoc, doc, serverTimestamp } from "firebase/firestore";
-import { db } from '../firebase-config';
 import { AuthContext } from '../context/AuthContext';
-import { v4 as uuid } from 'uuid';
 import { Avatar } from '@mui/material';
 import GroupAddIcon from '@mui/icons-material/GroupAdd';
 import LogoutIcon from '@mui/icons-material/Logout';
@@ -16,82 +13,35 @@ import Profile from './Profile'
 const Navbar = () => {
   const { currentUser } = useContext(AuthContext)
 
-let c_visibility=true;
-  const toggle = () => {
+  let visibility=true;
+  const Visibility=()=>{
     const hchats = document.getElementById('hchats');
     const search=document.getElementById('search');
-    if(c_visibility)
+    if(visibility)
     {
       hchats.style.visibility= 'hidden';
       search.style.visibility= 'hidden';
-      c_visibility=false;
+      visibility=false;
   }
     else{
       hchats.style.visibility= 'visible';
       search.style.visibility= 'visible';
-      c_visibility=true;
+      visibility=true;
     }
+  }
+
+  const toggle = () => {
     
+    Visibility()
     const popup = document.getElementById('popup');
     popup.classList.toggle('active');
 }
 
-let cs_visibility=true;
   const togglegroup = () => {
-    const hchats = document.getElementById('hchats');
-    const search=document.getElementById('search');
-    if(cs_visibility)
-    {
-      hchats.style.visibility= 'hidden';
-      search.style.visibility= 'hidden';
-      cs_visibility=false;
-  }
-    else{
-      hchats.style.visibility= 'visible';
-      search.style.visibility= 'visible';
-      cs_visibility=true;
-    }
-
+    Visibility()
     const popupgroup = document.getElementById('popupgroup');
     popupgroup.classList.toggle('active');
 }
-
-  const createGroup = async () => {
-    console.log('new group');
-    let groupName = "Test group 3";
-    let usersArray = ["7lCpJhgttyXaQyYyO7TtbfEij0E3", "sZbK3vujJhUneLOToo0sYG643sx2"]
-    usersArray.push(currentUser.uid);
-    
-    try {
-      let docId = uuid();
-
-      // Create a new document in the 'publicChats' subcollection using the docId for each user in the group
-      usersArray.forEach(async (user) => {
-        console.log(user);
-        await setDoc(doc(db, "chats", docId), {
-          [user]: { messages: [] },
-        });
-
-        await setDoc(doc(db, "userChats", user, "publicChats", docId), {
-          date: serverTimestamp(),
-          "groupInfo": {
-            groupId: docId,
-            displayName: groupName,
-            photoURL: currentUser.photoURL,
-            CreaterUid: currentUser.uid,
-          },
-          users: usersArray,
-          lastMessage: {
-            text: '',
-            createdAt: serverTimestamp(),
-        }
-      });
-    });
-  } catch (err) {
-    console.log(err);
-  }
-
-  }
 
   return (
     
