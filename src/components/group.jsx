@@ -54,7 +54,7 @@ const profilePicRef = useRef();
 
     return (    
         <div id='group' className='group'>
-        <FontAwesomeIcon icon={faClose} id='closeicon' onClick={<Navbar/>} />
+        <FontAwesomeIcon icon={faClose} id='closeicon' />
         <div id='group-pic"' className='group-pic"'>
         <img ref={profilePicRef} src={currentUser.photoURL} alt="" id="group-pic" className='group-pic"'/>
         <label htmlFor="input-file"><FontAwesomeIcon icon={faCamera} id='icon'/></label>

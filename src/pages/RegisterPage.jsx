@@ -6,7 +6,6 @@ import { doc, setDoc } from "firebase/firestore";
 import { useNavigate, Link } from 'react-router-dom';
 // import Add from '../img/addAvatar.png'
 import defultImg from '../img/broken-image.png'
-
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser ,faLock , faPhone ,faEnvelope} from '@fortawesome/free-solid-svg-icons';
 
@@ -67,27 +66,30 @@ export const RegisterPage = () => {
       };
 
   return (
-  <div class="wrapper">
-        <form onSubmit={Register}>
-        <h1>Registeration</h1>
-        <div class="input-box">
-                <input type="text" placeholder="Username" required/>
-                <FontAwesomeIcon icon={faUser} id='icon' />
-        </div>
-        <div class="input-box">
-                <input type="email" placeholder="Email" required/>
-                <FontAwesomeIcon icon={faEnvelope} id='icon' />
-        </div>
-        <div class="input-box">
-                <input type="number" placeholder="Phone Number" required/>
-                <FontAwesomeIcon icon={faPhone} id='icon' />
-        </div>
-        <div class="input-box">
-                <input type="password" placeholder="password" required/>
-                <FontAwesomeIcon icon={faLock}  id='icon' />
+    <div className="auth-regpage">
+      <div class="wrapper">
+        <h2 className="title">Registeration</h2> 
+        <form onClick={Register}>
+          <div class="input-box">
+                  <input type="text" placeholder="Username" required/>
+                  <FontAwesomeIcon icon={faUser} id='icon' />
+          </div>
 
-          {/* <label for=""><input type="checkbox"/> I heraby declare the above information provided is true and correct</label> */}
-          <button type="submit" class="btn">Sign up</button>
+          <div class="input-box">
+                  <input type="email" placeholder="Email" required/>
+                  <FontAwesomeIcon icon={faEnvelope} id='icon' />
+          </div>
+
+          <div class="input-box">
+                  <input type="number" placeholder="Phone Number" required/>
+                  <FontAwesomeIcon icon={faPhone} id='icon' />
+          </div>
+
+          <div class="input-box">
+                  <input type="password" placeholder="password" required/>
+                  <FontAwesomeIcon icon={faLock}  id='icon' />
+          </div>
+    <button type="submit" class="btn">Sign up</button>
           {loading && <span className='loader'> "Uploading and compressing the image please wait..."</span>}
           {err && <span style={{color: 'red'}}>Something went wrong</span>}
           <div class="register-link">
@@ -95,9 +97,9 @@ export const RegisterPage = () => {
               You do have an account? <Link  to='/login'>Login</Link>
             </p>
           </div>
-          </div>
         </form>
       </div>
+    </div>
   );
 };
 export default RegisterPage;

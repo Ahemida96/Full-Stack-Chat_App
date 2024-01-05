@@ -11,47 +11,35 @@ import LogoutIcon from '@mui/icons-material/Logout';
 import IconButton from '@mui/material/IconButton';
 import Group from './Group'
 import Profile from './Profile'
-// import Messages from './Messages'
 
 const Navbar = () => {
   const { currentUser } = useContext(AuthContext)
-
-let c_visibility=true;
-  const toggle = () => {
+  let visibility=true;
+  const Visibility=()=>{
     const hchats = document.getElementById('hchats');
     const search=document.getElementById('search');
-    if(c_visibility)
+    if(visibility)
     {
       hchats.style.visibility= 'hidden';
       search.style.visibility= 'hidden';
-      c_visibility=false;
+      visibility=false;
   }
     else{
       hchats.style.visibility= 'visible';
       search.style.visibility= 'visible';
-      c_visibility=true;
+      visibility=true;
     }
+  }
+
+  const toggle = () => {
     
+    Visibility()
     const popup = document.getElementById('popup');
     popup.classList.toggle('active');
 }
 
-let cs_visibility=true;
   const togglegroup = () => {
-    const hchats = document.getElementById('hchats');
-    const search=document.getElementById('search');
-    if(cs_visibility)
-    {
-      hchats.style.visibility= 'hidden';
-      search.style.visibility= 'hidden';
-      cs_visibility=false;
-  }
-    else{
-      hchats.style.visibility= 'visible';
-      search.style.visibility= 'visible';
-      cs_visibility=true;
-    }
-
+    Visibility()
     const popupgroup = document.getElementById('popupgroup');
     popupgroup.classList.toggle('active');
 }
