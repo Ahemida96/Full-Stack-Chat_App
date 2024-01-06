@@ -16,7 +16,6 @@ import ListItemText from '@mui/material/ListItemText';
 import Select from '@mui/material/Select';
 import Checkbox from '@mui/material/Checkbox';
 import Button from '@mui/material/Button';
-import Navbar from './Navbar'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCamera,faClose} from '@fortawesome/free-solid-svg-icons';
 
@@ -103,7 +102,7 @@ const Group = () => {
 
     return (    
         <div id='group' className='group'>
-        <FontAwesomeIcon icon={faClose} id='closeicon' onClick={<Navbar/>} />
+        <FontAwesomeIcon icon={faClose} id='closeicon' />
         <div id='group-pic"' className='group-pic"'>
         <img ref={profilePicRef} src={currentUser.photoURL} alt="" id="group-pic" className='group-pic"'/>
         <label htmlFor="input-file"><FontAwesomeIcon icon={faCamera} id='icon'/></label>
@@ -125,7 +124,7 @@ const Group = () => {
             multiple
             value={personName}
             onChange={handleChange}
-            input={<OutlinedInput label="Users" />}
+            input={<OutlinedInput label="Users"/>}
             renderValue={(selected) => selected.join(', ')}
             MenuProps={MenuProps}
             >

@@ -68,22 +68,20 @@ export const RegisterPage = () => {
                   <input type="text" placeholder="Username" required onChange={(e) => setDisplayName(e.target.value)}/>
                   <FontAwesomeIcon icon={faUser} id='icon' />
           </div>
+
           <div class="input-box">
                   <input type="email" placeholder="Email" required onChange={(e)=>setEmail(e.target.value)}/>
                   <FontAwesomeIcon icon={faEnvelope} id='icon' />
           </div>
+
           <div class="input-box">
                   <input type="number" placeholder="Phone Number" required onChange={(e)=> setPhoneNumber(e.target.value)}/>
                   <FontAwesomeIcon icon={faPhone} id='icon' />
           </div>
+
           <div class="input-box">
                   <input type="password" placeholder="password" required onChange={(e)=> setPassword(e.target.value)}/>
                   <FontAwesomeIcon icon={faLock}  id='icon' />
-
-          </div>
-          <div class="input-box">
-                  <input type="password" placeholder="Confirm Password" required/>
-                  <FontAwesomeIcon icon={faLock} id='icon'/>
           </div>
 
           <button type="submit" class="btn">Sign up</button>

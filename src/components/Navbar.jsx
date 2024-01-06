@@ -6,13 +6,11 @@ import { Avatar } from '@mui/material';
 import GroupAddIcon from '@mui/icons-material/GroupAdd';
 import LogoutIcon from '@mui/icons-material/Logout';
 import IconButton from '@mui/material/IconButton';
-import Group from './Group'
+import Group from './group'
 import Profile from './Profile'
-// import Messages from './Messages'
 
 const Navbar = () => {
   const { currentUser } = useContext(AuthContext)
-
   let visibility=true;
   const Visibility=()=>{
     const hchats = document.getElementById('hchats');
@@ -55,12 +53,12 @@ const Navbar = () => {
           style={{border:"none"}}
           />
 
-        <IconButton aria-label="AddGroup" onClick={togglegroup} style={{color:"white"}} >
+        <IconButton aria-label="AddGroup" onClick={togglegroup} className='Icon' >
             <GroupAddIcon />
           </IconButton>
       
         <IconButton  aria-label="logout">
-          <LogoutIcon onClick={()=>signOut(auth)}  style={{color:"white" }} />
+          <LogoutIcon onClick={()=>signOut(auth)}  className='Icon' />
         </IconButton>
         </div>
         

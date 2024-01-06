@@ -159,29 +159,16 @@ const Chat = () => {
         <div className="chatIcons">
           <Stack direction="row" spacing={1}>
 
-            <IconButton aria-label="video" onClick={videoCall} >
+            <IconButton aria-label="video" onClick={videoCall} className="Icon" >
               <DuoIcon />
             </IconButton>
 
-{/* <div class="entry-modal" id="entry-modal">
-        </div>
-    <div class="meet-area">
-        {/* <!-- Remote Video Element--> */}
-        {/* <video id="remote-video"></video> */}
-
-        {/* <!-- Local Video Element--> */}
-        {/* <video id="local-video"></video> */}
-        
-        {/* <!-- <div class="meet-controls-bar"> */}
-            {/* <button onclick="startScreenShare()">Screen Share</button> */}
-        {/* </div> --> */}
-    {/* </div> */} 
-
-            <IconButton aria-label="call" >
+            <IconButton aria-label="call"className="Icon" >
               <CallIcon />
             </IconButton>
 
             <IconButton
+              className="Icon"
               aria-label="more"
               id="long-button"
               aria-controls={open ? 'long-menu' : undefined}
@@ -192,6 +179,7 @@ const Chat = () => {
               <MoreVertIcon />
             </IconButton>
             <Menu 
+            className="Icon"
               id="long-menu"
               MenuListProps={{
                 'aria-labelledby': 'long-button',
