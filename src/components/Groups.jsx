@@ -36,19 +36,27 @@ const Group = () => {
     const [personName, setPersonName] = useState([]);
     const [friends, setFriends] = useState([]);
 
-    // const q = query(
-    //     collection(db, "users"),
-    //     where("uid", "==", currentUser.uid)
-    //     );
-    //     const querySnapshot = await getDocs(q);
-    //     querySnapshot.forEach((doc) => {
-    //     setFriends(doc.data().friends);
-    //     });
-
+    const getFriends = async () => {
+        try {
+        const q = query(
+            collection(db, "users"),
+            where("uid", "==", currentUser.uid)
+            );
+            const querySnapshot = await getDocs(q);
+            querySnapshot.forEach((doc) => {
+            setFriends(doc.data().friends);
+            });
+        } catch (err) {
+            console.log(err);
+        }
+    };
+    if (friends.length === 0) {
+        getFriends();
+    }
 
     // const names = friends.map((friend) => friend.displayName);
-    const names = ["A", "B", "C", "D", "E", "F", "G", "H", "I"];
-    console.log(friends);
+    const names = ['Oliver Hansen', 'Van Henry', 'April Tucker', 'Ralph Hubbard', 'Omar Alexander', 'Carlos Abbott'];
+    // console.log(friends);
     // console.log(names);
     
 
@@ -116,7 +124,7 @@ const Group = () => {
 
         <div className='users' id='users' >
         <FormControl sx={{ m: 1, width : 250 }} >
-            <InputLabel id="demo-multiple-checkbox-label">Users</InputLabel>
+            <InputLabel id="demo-multiple-checkbox-label" >Add Friends</InputLabel>
             <Select
             className='select'
             labelId="demo-multiple-checkbox-label"

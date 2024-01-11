@@ -39,3 +39,40 @@ export default function MultipleSelectCheckmarks() {
                 </div>
                 </div>
     )}
+
+    // import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
+// import {auth, db, storage} from '../firebase-config';
+// import { doc, setDoc, updateDoc } from "firebase/firestore";
+// import { updateProfile } from "firebase/auth";
+
+
+    //Create a unique image name
+    // const date = new Date().getTime();
+    // const storageRef = ref(storage, `${displayName + date}`);
+
+    // await uploadBytesResumable(storageRef, img).then(() => {
+    //   getDownloadURL(storageRef).then(async (downloadURL) => {
+    //     try {
+    //       //Update profile
+    //       await updateProfile(res.user, {
+    //         displayName,
+    //         photoURL: defultImg,
+    //       });
+    //       //create user on firestore
+    //       await setDoc(doc(db, "users", res.user.uid), {
+    //         uid: res.user.uid,
+    //         displayName,
+    //         email,
+    //         photoURL: defultImg,
+    //         phoneNumber,
+    //       });
+
+    //       //create empty user chats on firestore
+    //       await setDoc(doc(db, "userChats", res.user.uid), {});
+    //       navigate("/");
+    //     } catch (err) {
+    //       console.log(err);
+    //       setErr(true);
+    //       setLoading(false);
+    //     }
+    //   });

@@ -6,7 +6,7 @@ import { Avatar } from '@mui/material';
 import GroupAddIcon from '@mui/icons-material/GroupAdd';
 import LogoutIcon from '@mui/icons-material/Logout';
 import IconButton from '@mui/material/IconButton';
-import Group from './group'
+import Group from './Groups'
 import Profile from './Profile'
 
 const Navbar = () => {
