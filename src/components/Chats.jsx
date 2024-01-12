@@ -3,7 +3,6 @@ import { onSnapshot, collection } from "firebase/firestore";
 import { AuthContext } from '../context/AuthContext';
 import { ChatContext } from '../context/ChatContext';
 import { db } from '../firebase-config';
-// import Navbar from './Navbar'
 
 const Chats = () => {
   const [chats, setChats] = useState([]);

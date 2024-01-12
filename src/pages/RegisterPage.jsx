@@ -22,7 +22,7 @@ export const RegisterPage = () => {
     setLoading(true);
     e.preventDefault();
 
-    console.log(displayName, email, password , phoneNumber);
+    // console.log(displayName, email, password , phoneNumber);
 
     try {
       console.log("Registering...");
