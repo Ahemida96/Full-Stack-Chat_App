@@ -22,13 +22,13 @@ To run this project locally, follow these steps:
    ```bash
    git clone https://github.com/Ahemida96/Full-Stack-Chat_App.git
 
-1. Navigate to the project directory:
+2. Navigate to the project directory:
 
   ```bash
   cd Full-Stack-Chat_App
   ```
 
-2. Install dependencies:
+3. Install dependencies:
 
   ```bash
 
@@ -36,26 +36,26 @@ To run this project locally, follow these steps:
   npm install
   ```
 
-3. Start the application:
+4. Start the application:
 
   ```bash
   npm start
   Open your browser and visit http://localhost:3000 to use the application.
   ```
 
-##Technologies Used
-#Frontend:
+## Technologies Used
+# Frontend:
 React
 Socket.io-client
 
-#Backend:
+# Backend:
 Node.js
 Socket.io
 
-##Contributing
+## Contributing
 If you'd like to contribute to the project, please follow these steps:
 
-#Fork the repository.
+# Fork the repository.
 Create a new branch for your feature or bug fix.
 Make your changes and submit a pull request.
 
