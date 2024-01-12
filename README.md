@@ -59,6 +59,6 @@ If you'd like to contribute to the project, please follow these steps:
 Create a new branch for your feature or bug fix.
 Make your changes and submit a pull request.
 
-##License
+## License
 This project is licensed under the MIT License.
 
