@@ -12,6 +12,8 @@ export default function Profile() {
     const [displayName, setDisplayName] = useState(currentUser.displayName);
     const [email, setEmail] = useState(currentUser.email);
     const [phoneNumber, setPhoneNumber] = useState(currentUser.phoneNumber);
+    const submitBtn = document.getElementById('submit');
+
 
     const profilePicRef = useRef();
     const inputFileRef = useRef();
@@ -22,16 +24,13 @@ export default function Profile() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         console.log('profile updating');
-        console.log(displayName, email, phoneNumber)
-        // const username = e.target[1].value;
-        // const email = e.target[2].value;
-        // const phoneNumber = e.target[3].value;
 
         // Create a unique image name
         const date = new Date().getTime();
         const storageRef = ref(storage, `${currentUser.displayName + date}`);
 
         await uploadBytesResumable(storageRef, profilePicRef).then(() => {
+            console.log('uploaded');
             getDownloadURL(storageRef).then(async (downloadURL) => {
                 try {
                     //Update profile
@@ -48,6 +47,7 @@ export default function Profile() {
                         photoURL: profilePicRef? downloadURL: currentUser.photoURL,
                         phoneNumber : phoneNumber? phoneNumber: currentUser.phoneNumber,
                     });
+                    submitBtn.disabled = false;
                 } catch (err) {
                     console.log("Coudn't update profile, Try again later", err);
                 }
@@ -78,7 +78,7 @@ export default function Profile() {
                             <input type="number" placeholder="Phone Number" value={phoneNumber} onChange={e => setPhoneNumber(e.target.value)}/>
                             <FontAwesomeIcon icon={faPhone} id='icon' />
                         </div>
-                        <button type="submit" className="btn" >Update</button>
+                        <button type="submit" className="btn" id='submit' >Update</button>
                     </form>
                 </div>
                 </div>
