@@ -45,12 +45,12 @@ To run this project locally, follow these steps:
 
 ## Technologies Used
 # Frontend:
-React
-Socket.io-client
+* React
+* Socket.io-client
 
 # Backend:
-Node.js
-Socket.io
+* Node.js
+* Socket.io
 
 ## Contributing
 If you'd like to contribute to the project, please follow these steps:
