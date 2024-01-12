@@ -53,8 +53,8 @@ const Navbar = () => {
           style={{border:"none"}}
           />
 
-        <IconButton aria-label="AddGroup" onClick={togglegroup} className='Icon' >
-            <GroupAddIcon />
+        <IconButton aria-label="AddGroup" >
+            <GroupAddIcon onClick={togglegroup} className='Icon' />
           </IconButton>
       
         <IconButton  aria-label="logout">
@@ -62,7 +62,7 @@ const Navbar = () => {
         </IconButton>
         </div>
         
-      <div id="popupgroup" class="users " >
+      <div id="popupgroup" className="users " >
         <Group/>
       </div>
 
