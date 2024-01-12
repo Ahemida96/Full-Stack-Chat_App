@@ -3,9 +3,9 @@ import { AuthContext } from '../context/AuthContext'
 import { setDoc, doc, serverTimestamp, getDocs, query, collection, where } from "firebase/firestore";
 import { db } from '../firebase-config';
 import { v4 as uuid } from 'uuid';
-import { storage } from '../firebase-config';
-import { getDownloadURL, ref, uploadBytesResumable } from 'firebase/storage';
-import { ChatContext } from '../context/ChatContext';
+// import { storage } from '../firebase-config';
+// import { getDownloadURL, ref, uploadBytesResumable } from 'firebase/storage';
+// import { ChatContext } from '../context/ChatContext';
 
 
 import OutlinedInput from '@mui/material/OutlinedInput';
