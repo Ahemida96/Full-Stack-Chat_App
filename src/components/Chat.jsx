@@ -1,8 +1,8 @@
-import React, {useContext, useState, useRef, useEffect} from 'react';
+import React, {useContext, useState } from 'react';
 import Messages from './Messages';
 import Input from './Input';
 // import VideoCall from './VideoCall';
-import { Peer } from "peerjs";
+// import { Peer } from "peerjs";
 
 import { ChatContext } from '../context/ChatContext';
 import { AuthContext } from '../context/AuthContext';
@@ -20,7 +20,8 @@ import Snackbar from '@mui/material/Snackbar';
 import CloseIcon from '@mui/icons-material/Close';
 import Button from '@mui/material/Button';
 import StartChatting from './StartChatting'
-import { Alert } from '@mui/material';
+// import { Alert } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
 
 const ITEM_HEIGHT = 48;
 
@@ -32,9 +33,8 @@ const Chat = () => {
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
 
-  const peerInstance = useRef(null);
-  const remoteVideoRef = useRef(null);
-  const currentUserVideoRef = useRef(null);
+
+  const navigate = useNavigate();
 
 
   // for menu
@@ -104,48 +104,10 @@ const Chat = () => {
     </React.Fragment>
   );
 
-  // for video call
-  const videoCall = () => {
-
-    var getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
-
-    getUserMedia({ video: true, audio: true }, (mediaStream) => {
-
-      currentUserVideoRef.current.srcObject = mediaStream;
-      currentUserVideoRef.current.play();
-
-      const call = peerInstance.current.call(`call${data.user.uid}`, mediaStream)
-
-      call.on('stream', (remoteStream) => {
-        remoteVideoRef.current.srcObject = remoteStream
-        remoteVideoRef.current.play();
-      });
-    });
+  const ChangeRoute = () => {
+    // navigate(`/CallsRoom/${data.chatId}`);
+    navigate(`/CallsRoom/${data.chatId}`);
   }
-
-  useEffect(() => {
-    const peer = new Peer(`call${currentUser.uid}`);
-
-    peer.on('open', (id) => {
-      console.log('My peer ID is: ' + id);
-    });
-
-    peer.on('call', (call) => {
-      var getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia;
-      <Alert severity="success">You have a call — check it out!</Alert>
-      getUserMedia({ video: true, audio: true }, (mediaStream) => {
-        currentUserVideoRef.current.srcObject = mediaStream;
-        currentUserVideoRef.current.play();
-        call.answer(mediaStream)
-        call.on('stream', function(remoteStream) {
-          remoteVideoRef.current.srcObject = remoteStream
-          remoteVideoRef.current.play();
-        });
-      });
-    })
-
-    peerInstance.current = peer;
-  }, [ currentUser.uid])
 
   // if no user or group is selected then show start chatting component
   if(data.chatId === "null"){
@@ -159,8 +121,8 @@ const Chat = () => {
         <div className="chatIcons">
           <Stack direction="row" spacing={1}>
 
-            <IconButton aria-label="video" onClick={videoCall} className="Icon" >
-              <DuoIcon />
+            <IconButton aria-label="video"  className="Icon" >
+              <DuoIcon onClick={ChangeRoute}/>
             </IconButton>
 
             <IconButton aria-label="call"className="Icon" >
@@ -214,12 +176,6 @@ const Chat = () => {
           action={action}
           />
         <Messages />
-        {/* <div>
-        <video ref={currentUserVideoRef} />
-        </div>
-        <div>
-          <video ref={remoteVideoRef} />
-        </div> */}
         <Input />
     </div>
     
