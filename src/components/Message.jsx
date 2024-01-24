@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useRef, useState } from 'react'
 import { AuthContext } from '../context/AuthContext'
 import { ChatContext } from '../context/ChatContext';
 import { Avatar } from '@mui/material';
+import defultImg from '../img/broken-image.png'
 
 const Message = ({message}) => {
   const {currentUser} = useContext(AuthContext);
@@ -31,9 +32,9 @@ const Message = ({message}) => {
             <Avatar
               alt="Profile Picture"
               src={message.senderId === currentUser.uid?
-                 currentUser.photoURL? currentUser.photoURL: "../img/broken-image.png" : 
-                 data.type === "groupChat"? handleGroupUser().photoURL? handleGroupUser().photoURL: "../img/broken-image.png" : 
-                 data.user.photoURL? data.user.photoURL: "../img/broken-image.png" }
+                 currentUser.photoURL? currentUser.photoURL: defultImg : 
+                 data.type === "groupChat"? handleGroupUser().photoURL? handleGroupUser().photoURL: defultImg : 
+                 data.user.photoURL? data.user.photoURL: defultImg }
               sx={{ width: 56, height: 56 }}
             />
             <span>{data.type === "groupChat"? handleGroupUser().displayName: ""}</span>
