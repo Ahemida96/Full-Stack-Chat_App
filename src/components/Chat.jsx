@@ -1,8 +1,6 @@
 import React, {useContext, useState } from 'react';
 import Messages from './Messages';
 import Input from './Input';
-// import VideoCall from './VideoCall';
-// import { Peer } from "peerjs";
 
 import { ChatContext } from '../context/ChatContext';
 import { AuthContext } from '../context/AuthContext';
@@ -105,7 +103,6 @@ const Chat = () => {
   );
 
   const ChangeRoute = () => {
-    // navigate(`/CallsRoom/${data.chatId}`);
     navigate(`/CallsRoom/${data.chatId}`);
   }
 
