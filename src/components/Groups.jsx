@@ -34,7 +34,7 @@ const Group = () => {
     const { currentUser } = useContext(AuthContext)
     const profilePicRef = useRef();
     const [personName, setPersonName] = useState([]);
-    const [friends, setFriends] = useState([]);
+    // const [friends, setFriends] = useState([]);
 
     // const getFriends = async () => {
     //     try {
@@ -73,8 +73,8 @@ const Group = () => {
 
     const createGroup = async () => {
         console.log('new group');
-        let groupName = "Test group 3";
-        let usersArray = ["7lCpJhgttyXaQyYyO7TtbfEij0E3", "sZbK3vujJhUneLOToo0sYG643sx2"]
+        let groupName = "Test group 1";
+        let usersArray = ["KVXxFzG5oQWZ5GS9rmEcrtBKv762", "oEyjBPpEB4d5JpvnpwN7vwmn7Fy2"]
         usersArray.push(currentUser.uid);
         
         try {
