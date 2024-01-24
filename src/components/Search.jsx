@@ -29,6 +29,10 @@ const Search = () => {
   }catch(err){
     setErr(true)
     setErrMessage("User not found")
+    setTimeout(() => {
+      setErr(false)
+      setErrMessage("")
+    }, 3000);
   }
 };
 
@@ -37,11 +41,17 @@ const Search = () => {
   };
 
   const handleSelect = async () => {
-
+    // empty the search bar
+    setUsername("");
     // check if the user sending request to himself
     if (user.uid === currentUser.uid) {
       setErr(true);
       setErrMessage("You cannot add yourself");
+      setTimeout(() => {
+        setUser(null);
+        setErr(false);
+        setErrMessage("");
+      }, 3000);
       return;
     }
 
@@ -80,9 +90,9 @@ const Search = () => {
       const currentUserres = await getDoc(doc(db, "userChats", currentUser.uid, "privateChat", combinedId));
       const otherUserres = await getDoc(doc(db, "userChats", user.uid,"privateChat", combinedId));
       
-      console.log("res", res.exists());
-      console.log("currentUserres", currentUserres.exists());
-      console.log("otherUserres", otherUserres.exists());
+      // console.log("res", res.exists());
+      // console.log("currentUserres", currentUserres.exists());
+      // console.log("otherUserres", otherUserres.exists());
       
       if (!res.exists() || !currentUserres.exists() || !otherUserres.exists()) {
         //create a chat in chats collection
