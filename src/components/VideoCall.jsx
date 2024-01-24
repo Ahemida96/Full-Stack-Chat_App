@@ -1,11 +1,13 @@
-import React, { useContext, useRef, useState } from 'react'
-import { Peer } from "peerjs";
-// import { Alert } from '@mui/material';
+import React, { useContext, useEffect, useRef, useState } from 'react'
 import { useParams } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
 import { ChatContext } from '../context/ChatContext';
+
 import { db } from '../firebase-config';
 import { arrayUnion, deleteDoc, doc, getDoc, serverTimestamp, setDoc, updateDoc } from 'firebase/firestore';
+import { Peer } from "peerjs";
+
+// import { Alert } from '@mui/material';
 import ButtonGroup from '@mui/material/ButtonGroup';
 import Box from '@mui/material/Box';
 import Fab from '@mui/material/Fab';
@@ -14,15 +16,40 @@ import ScreenShareIcon from '@mui/icons-material/ScreenShare';
 import VideocamIcon from '@mui/icons-material/Videocam';
 import VideocamOffIcon from '@mui/icons-material/VideocamOff';
 
+// export const VideoCallContext = createContext();
 
 function VideoCall() {
   const remoteVideoRef = useRef(null);
   const localVideoRef = useRef(null);
+  const [camera, setCamera] = useState(false);
   const { currentUser } = useContext(AuthContext);
   const { data } = useContext(ChatContext)
-  const [camera, setCamera] = useState(false);
+
 
   const { chatId } = useParams();
+
+  useEffect(() => {
+    const getRoom = async () => {
+    const roomRef = doc(db, 'rooms', `${chatId}`);
+    const roomSnapshot = await getDoc(roomRef);
+
+    console.log('Got room:', roomSnapshot.exists());
+
+    if (roomSnapshot.exists()) {
+      console.log('joining room');
+      answerCall();
+    }
+    else {
+      console.log('room not found - creating room');
+      createCall();
+    }
+
+  }
+  return () => {
+    getRoom();
+  }
+  }, [chatId , currentUser.uid]);
+
   if (chatId !== data.chatId) return;
 
   var room_id;
@@ -30,12 +57,9 @@ function VideoCall() {
   var screenStream;
   var local_stream;
   var peer = null;
-  var currentPeer = null
+  var currentPeer = null;
   var screenSharing = false;
 
-  const hideModal = () => {
-    document.getElementById("entry-modal").hidden = true
-  }
 
   const notify = (msg) => {
     let notification = document.getElementById("notification")
@@ -59,7 +83,8 @@ function VideoCall() {
     console.log(room_id);
     peer = new Peer(room_id);
     peer.on('open', (id) => {
-      hideModal();
+      
+      localVideoRef.current.hidden = false;
       getUserMedia({ video: true, audio: true }, (mediaStream) => {
         local_stream = mediaStream;
 
@@ -81,7 +106,7 @@ function VideoCall() {
     });
   }
 
-  const joinRoom = async () => {
+  const answerCall = async () => {
     console.log('joining room');
     room_id = chatId;
     const roomRef = doc(db, 'rooms', `${chatId}`);
@@ -101,11 +126,11 @@ function VideoCall() {
         }
       });
 
-      hideModal();
       peer = new Peer();
       peer.on('open', (id) => {
         console.log('My peer ID is: ' + id);
-        hideModal();
+        
+        localVideoRef.current.hidden = false;
         getUserMedia({ video: true, audio: true }, (mediaStream) => {
           local_stream = mediaStream;
           localVideoRef.current.srcObject = mediaStream;
@@ -215,18 +240,10 @@ function VideoCall() {
   return (
     <div className='videoCallWindow'>
       <p id="notification" hidden></p>
-      <div class="entry-modal" id="entry-modal">
-        <p>Create or Join Meeting</p>
-        <input id="room-input" class="room-input" placeholder="Enter Room ID" />
-        <div>
-          <button onClick={createCall}>Create Room</button>
-          <button onClick={joinRoom}>Join Room</button>
-        </div>
-      </div>
       <div class="meet-area">
         <video id="remote-video" ref={remoteVideoRef} width={1270} height={750}></video>
 
-        <video id="local-video" ref={localVideoRef} width={370} height={200}></video>
+        <video hidden id="local-video" ref={localVideoRef} width={370} height={200}></video>
 
       </div>
       <Box
