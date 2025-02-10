@@ -2,7 +2,7 @@
 
 ## Overview
 
-Welcome to the Full-Stack Chat App! This project is a real-time chat application that allows users to communicate with each other in a seamless and interactive way. The application is built using a full-stack approach, incorporating technologies like React, Node.js, Express, and Socket.io.
+Welcome to the Full-Stack Chat App! This project is a real-time chat application that allows users to communicate with each other in a seamless and interactive way. The application is built using a full-stack approach, incorporating technologies like React, Node.js, Express, Firebase and Socket.io.
 
 ## Features
 
@@ -18,7 +18,7 @@ To run this project locally, follow these steps:
 1. Clone the repository:
 
    ```bash
-   git clone https://github.com/Ahemida96/Full-Stack-Chat_App.git
+   git clone https://github.com/Ahemida96/React-Node.jsFull-Stack-Chat_App.git
 
 2. Navigate to the project directory:
 
@@ -49,6 +49,9 @@ To run this project locally, follow these steps:
 # Backend:
 * Node.js
 * Socket.io
+
+# Database
+* Firebase
 
 ## Contributing
 If you'd like to contribute to the project, please follow these steps:
