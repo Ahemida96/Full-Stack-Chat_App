@@ -1,4 +1,4 @@
-# Full-Stack Chat App
+# React, Node.js Full-Stack Chat App
 
 ## Overview
 
