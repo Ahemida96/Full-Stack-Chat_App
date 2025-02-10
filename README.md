@@ -1,7 +1,5 @@
 # Full-Stack Chat App
 
-![App Screenshot](screenshot.png)
-
 ## Overview
 
 Welcome to the Full-Stack Chat App! This project is a real-time chat application that allows users to communicate with each other in a seamless and interactive way. The application is built using a full-stack approach, incorporating technologies like React, Node.js, Express, and Socket.io.
